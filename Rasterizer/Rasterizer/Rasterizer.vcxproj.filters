@@ -48,6 +48,9 @@
     <ClInclude Include="TestTools.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Vec4_Optimised.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Rasterizer\raster.cpp">

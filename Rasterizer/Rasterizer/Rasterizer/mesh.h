@@ -5,7 +5,7 @@
 #include "vec4.h"
 #include "matrix.h"
 #include "colour.h"
-
+#include<cmath>
 // Represents a vertex in a 3D mesh, including its position, normal, and color
 struct Vertex {
     vec4 p;         // Position of the vertex in 3D space
@@ -88,6 +88,7 @@ public:
     // - x2, y2: Coordinates of the opposite corner
     // Returns a Mesh object representing the rectangle
     static Mesh makeRectangle(float x1, float y1, float x2, float y2) {
+       //! multithread here
         Mesh mesh;
         mesh.vertices.clear();
         mesh.triangles.clear();
