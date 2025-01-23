@@ -131,6 +131,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="Rasterizer\mesh_Optimised.h" />
     <ClInclude Include="Rasterizer\colour.h" />
     <ClInclude Include="Rasterizer\GamesEngineeringBase.h" />
     <ClInclude Include="Rasterizer\light.h" />
@@ -141,8 +142,8 @@
     <ClInclude Include="Rasterizer\triangle.h" />
     <ClInclude Include="Rasterizer\vec4.h" />
     <ClInclude Include="Rasterizer\zbuffer.h" />
-    <ClInclude Include="TestTools.h" />
-    <ClInclude Include="Vec4_Optimised.h" />
+    <ClInclude Include="Rasterizer\TestTools.h" />
+    <ClInclude Include="Rasterizer\Vec4_Optimised.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Rasterizer\raster.cpp" />

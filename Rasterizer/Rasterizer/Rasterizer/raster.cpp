@@ -16,7 +16,7 @@
 #include "light.h"
 #include "triangle.h"
 
-#include "../TestTools.h" // introduce support functions to evaluate performance
+#include "TestTools.h" // introduce support functions to evaluate performance
 
 // Main rendering function that processes a mesh, transforms its vertices, applies lighting, and draws triangles on the canvas.
 // Input Variables:

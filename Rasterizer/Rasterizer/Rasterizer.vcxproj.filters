@@ -45,10 +45,13 @@
     <ClInclude Include="Rasterizer\zbuffer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="TestTools.h">
+    <ClInclude Include="Rasterizer\TestTools.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Vec4_Optimised.h">
+    <ClInclude Include="Rasterizer\Vec4_Optimised.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Rasterizer\mesh_Optimised.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
