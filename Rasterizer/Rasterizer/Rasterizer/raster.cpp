@@ -257,12 +257,17 @@ void scene2() {
         delete m;
 }
 
+void Scene3() {
+    // Scene3 was designed to test shading?...
+
+
+}
 // Entry point of the application
 // No input variables
 int main() {
     // Uncomment the desired scene function to run
-    //scene1();
-    scene2();
+    scene1();
+   // scene2();
     //sceneTest(); 
     
 

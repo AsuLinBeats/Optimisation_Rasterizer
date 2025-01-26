@@ -131,6 +131,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="Rasterizer\matrix_optimised.h" />
     <ClInclude Include="Rasterizer\mesh_Optimised.h" />
     <ClInclude Include="Rasterizer\colour.h" />
     <ClInclude Include="Rasterizer\GamesEngineeringBase.h" />

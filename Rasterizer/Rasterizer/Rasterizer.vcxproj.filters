@@ -54,6 +54,9 @@
     <ClInclude Include="Rasterizer\mesh_Optimised.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Rasterizer\matrix_optimised.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Rasterizer\raster.cpp">
