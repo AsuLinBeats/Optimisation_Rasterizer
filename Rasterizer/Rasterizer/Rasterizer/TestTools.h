@@ -16,6 +16,8 @@ void TimeTest(Func func) {
 }
 
 
+
+
 // Check if array is aligned to 32 byte
 
 void CheckAlignment32(void *aligned_array) {

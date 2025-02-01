@@ -1,12 +1,16 @@
+
 #pragma once
 
 #include <vector>
 #include <iostream>
-#include "vec4.h"
+#include <immintrin.h>
+#include "Vec4_Optimised.h"
+//#include "vec4.h"
 #include "matrix.h"
+//#include "matrix_optimised.h"
 #include "colour.h"
-#include <cmath>
-// fix M_PI error
+#include<cmath>
+
 #ifndef M_PI
 #define M_PI 3.14159265358979323846
 #endif
@@ -46,7 +50,7 @@ public:
     // - _ka: Ambient reflection coefficient
     // - _kd: Diffuse reflection coefficient
     void setColour(colour _c, float _ka, float _kd) {
-        col = std::move(_c);
+        col = _c;
         ka = _ka;
         kd = _kd;
     }
@@ -62,15 +66,15 @@ public:
     // - vertex: Position of the vertex
     // - normal: Normal vector for the vertex
     void addVertex(const vec4& vertex, const vec4& normal) {
-        Vertex v = { std::move(vertex), std::move(normal), std::move(col) };
-        vertices.emplace_back(v); 
+        Vertex v = { vertex, normal, col };
+        vertices.push_back(v);
     }
 
     // Add a triangle to the mesh
     // Input Variables:
     // - v1, v2, v3: Indices of the vertices forming the triangle
     void addTriangle(int v1, int v2, int v3) {
-        triangles.emplace_back(std::move(v1), std::move(v2), std::move(v3));
+        triangles.emplace_back(v1, v2, v3);
     }
 
     // Display the vertices and triangles of the mesh
@@ -93,13 +97,11 @@ public:
     // - x2, y2: Coordinates of the opposite corner
     // Returns a Mesh object representing the rectangle
     static Mesh makeRectangle(float x1, float y1, float x2, float y2) {
-        
+        //! multithread here
         Mesh mesh;
         mesh.vertices.clear();
         mesh.triangles.clear();
-        mesh.vertices.reserve(4); // size is confirmed, so leave space to avoid dynamic adjustment
-        mesh.triangles.reserve(2); // 2 triangle
-        //! multithread here, 1 threads to do edge calculation, another to do add.
+
         // Define the four corners of the rectangle
         vec4 v1(x1, y1, 0);
         vec4 v2(x2, y1, 0);
@@ -122,7 +124,7 @@ public:
         mesh.addTriangle(0, 2, 1);
         mesh.addTriangle(0, 3, 2);
 
-        return std::move(mesh); // move it back directly
+        return mesh;
     }
 
     // Generate a cube mesh
@@ -133,18 +135,17 @@ public:
         Mesh mesh;
         float halfSize = size / 2.0f;
 
-        // Define cube vertices (8 corners)
-        vec4 positions[8] = {
-            vec4(-halfSize, -halfSize, -halfSize),
-            vec4(halfSize, -halfSize, -halfSize),
-            vec4(halfSize, halfSize, -halfSize),
-            vec4(-halfSize, halfSize, -halfSize),
-            vec4(-halfSize, -halfSize, halfSize),
-            vec4(halfSize, -halfSize, halfSize),
-            vec4(halfSize, halfSize, halfSize),
-            vec4(-halfSize, halfSize, halfSize)
+        // Define cube vertices (8 corners) ()
+        alignas(32) float pos[8][4] = {
+            {-1,-1,-1,1},
+            {1,-1,-1,1},
+            {1,1,-1,1},
+            {-1,1,-1,1},
+            {-1,-1,1,1},
+            {1,-1,1,1},
+            {1,1,1,1},
+            {-1,1,1,1}
         };
-
         // Define face normals
         vec4 normals[6] = {
             vec4(0, 0, -1, 0),
@@ -155,35 +156,61 @@ public:
             vec4(0, 1, 0, 0)
         };
 
-        // Add vertices and triangles for each face
-        int faceIndices[6][4] = {
-            {1, 0, 3, 2},
-            {4, 5, 6, 7},
-            {3, 0, 4, 7},
-            {5, 1, 2, 6},
-            {0, 1, 5, 4},
-            {2, 3, 7, 6}
-        };
+        vec4 positions[8];
+        for (int i = 0; i < 8; i += 4) {
+            // load 4 float for each line every time running
+            __m128 sign_x = _mm_load_ps(&pos[i][0]);
+            __m128 sign_y = _mm_load_ps(&pos[i][1]);
+            __m128 sign_z = _mm_load_ps(&pos[i][2]);
+            __m128 sign_w = _mm_load_ps(&pos[i][3]);
 
-        // parallelize face generation: 6 faces,
-        for (int i = 0; i < 6; ++i) {
-            int v0 = faceIndices[i][0];
-            int v1 = faceIndices[i][1];
-            int v2 = faceIndices[i][2];
-            int v3 = faceIndices[i][3];
+            // calculate position: coord = sign * halfSize
+            __m128 scaled_x = _mm_mul_ps(sign_x, _mm_set1_ps(halfSize));
+            __m128 scaled_y = _mm_mul_ps(sign_y, _mm_set1_ps(halfSize));
+            __m128 scaled_z = _mm_mul_ps(sign_z, _mm_set1_ps(halfSize));
+            __m128 scaled_w = _mm_mul_ps(sign_w, _mm_set1_ps(halfSize));
 
-            // Add vertices with their normals
-            mesh.addVertex(positions[v0], normals[i]);
-            mesh.addVertex(positions[v1], normals[i]);
-            mesh.addVertex(positions[v2], normals[i]);
-            mesh.addVertex(positions[v3], normals[i]);
-
-            // Add two triangles for the face
-            int baseIndex = i * 4;
-            mesh.addTriangle(baseIndex, baseIndex + 2, baseIndex + 1);
-            mesh.addTriangle(baseIndex, baseIndex + 3, baseIndex + 2);
+            // save to position array
+            _mm_store_ps(&positions[i].x, scaled_x);
+            _mm_store_ps(&positions[i].y, scaled_y);
+            _mm_store_ps(&positions[i].z, scaled_z);
+            _mm_store_ps(&positions[i].w, scaled_w);
         }
-        return std::move(mesh);
+
+        mesh.vertices.reserve(24); // 6 faces * 4 vertices
+        mesh.triangles.reserve(12); // 6 faces * 2 triangles
+
+
+      //! zai kan kan
+
+        //// Add vertices and triangles for each face
+        //int faceIndices[6][4] = {
+        //    {1, 0, 3, 2},
+        //    {4, 5, 6, 7},
+        //    {3, 0, 4, 7},
+        //    {5, 1, 2, 6},
+        //    {0, 1, 5, 4},
+        //    {2, 3, 7, 6}
+        //};
+
+        //for (int i = 0; i < 6; ++i) {
+        //    int v0 = faceIndices[i][0];
+        //    int v1 = faceIndices[i][1];
+        //    int v2 = faceIndices[i][2];
+        //    int v3 = faceIndices[i][3];
+
+        //    // Add vertices with their normals
+        //    mesh.addVertex(positions[v0], normals[i]);
+        //    mesh.addVertex(positions[v1], normals[i]);
+        //    mesh.addVertex(positions[v2], normals[i]);
+        //    mesh.addVertex(positions[v3], normals[i]);
+
+        //    // Add two triangles for the face
+        //    int baseIndex = i * 4;
+        //    mesh.addTriangle(baseIndex, baseIndex + 2, baseIndex + 1);
+        //    mesh.addTriangle(baseIndex, baseIndex + 3, baseIndex + 2);
+        //}
+        //return mesh;
     }
 
     // Generate a sphere mesh
@@ -239,6 +266,6 @@ public:
                 mesh.addTriangle(v1, v3, v2);
             }
         }
-        return std::move(mesh);
+        return mesh;
     }
 };

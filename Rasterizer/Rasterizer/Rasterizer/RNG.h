@@ -2,7 +2,8 @@
 
 
 #include <random>
-
+#include <thread>
+#include <atomic>
 class RandomNumberGenerator {
 public:
     // Delete copy constructor and assignment operator
@@ -11,18 +12,18 @@ public:
 
     // Get the singleton instance
     static RandomNumberGenerator& getInstance() {
-        static RandomNumberGenerator instance;
+        thread_local RandomNumberGenerator instance; // support multithreads
         return instance;
     }
 
     // Generate a random integer within a range
-    int getRandomInt(int min, int max) {
+    int getRandomInt(int min, int max)noexcept {
         std::uniform_int_distribution<int> distribution(min, max);
         return distribution(rng);
     }
 
     // Generate a random integer within a range
-    float getRandomFloat(float min, float max) {
+    float getRandomFloat(float min, float max)noexcept {
         std::uniform_real_distribution<float> distribution(min, max);
         return distribution(rng);
     }

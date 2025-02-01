@@ -3,8 +3,40 @@
   "WorkspaceRootPath": "C:\\Users\\Davi\\source\\Optimisation_Rasterizer\\Rasterizer\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{21FA78E7-98FB-454C-8E6B-94761B9FEFA0}|Rasterizer\\Rasterizer.vcxproj|C:\\Users\\Davi\\source\\Optimisation_Rasterizer\\Rasterizer\\Rasterizer\\Rasterizer\\matrix_optimised.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
-      "RelativeMoniker": "D:0:0:{21FA78E7-98FB-454C-8E6B-94761B9FEFA0}|Rasterizer\\Rasterizer.vcxproj|solutionrelative:Rasterizer\\Rasterizer\\matrix_optimised.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+      "AbsoluteMoniker": "D:0:0:{21FA78E7-98FB-454C-8E6B-94761B9FEFA0}|Rasterizer\\Rasterizer.vcxproj|C:\\Users\\Davi\\source\\Optimisation_Rasterizer\\Rasterizer\\Rasterizer\\Rasterizer\\mesh.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{21FA78E7-98FB-454C-8E6B-94761B9FEFA0}|Rasterizer\\Rasterizer.vcxproj|solutionrelative:Rasterizer\\Rasterizer\\mesh.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{21FA78E7-98FB-454C-8E6B-94761B9FEFA0}|Rasterizer\\Rasterizer.vcxproj|C:\\Users\\Davi\\source\\Optimisation_Rasterizer\\Rasterizer\\Rasterizer\\Rasterizer\\RNG.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{21FA78E7-98FB-454C-8E6B-94761B9FEFA0}|Rasterizer\\Rasterizer.vcxproj|solutionrelative:Rasterizer\\Rasterizer\\RNG.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{21FA78E7-98FB-454C-8E6B-94761B9FEFA0}|Rasterizer\\Rasterizer.vcxproj|C:\\Users\\Davi\\source\\Optimisation_Rasterizer\\Rasterizer\\Rasterizer\\Rasterizer\\mesh_Optimised.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{21FA78E7-98FB-454C-8E6B-94761B9FEFA0}|Rasterizer\\Rasterizer.vcxproj|solutionrelative:Rasterizer\\Rasterizer\\mesh_Optimised.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{21FA78E7-98FB-454C-8E6B-94761B9FEFA0}|Rasterizer\\Rasterizer.vcxproj|C:\\Users\\Davi\\source\\Optimisation_Rasterizer\\Rasterizer\\Rasterizer\\Rasterizer\\colour.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{21FA78E7-98FB-454C-8E6B-94761B9FEFA0}|Rasterizer\\Rasterizer.vcxproj|solutionrelative:Rasterizer\\Rasterizer\\colour.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{21FA78E7-98FB-454C-8E6B-94761B9FEFA0}|Rasterizer\\Rasterizer.vcxproj|C:\\Users\\Davi\\source\\Optimisation_Rasterizer\\Rasterizer\\Rasterizer\\Rasterizer\\colour_optimised.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{21FA78E7-98FB-454C-8E6B-94761B9FEFA0}|Rasterizer\\Rasterizer.vcxproj|solutionrelative:Rasterizer\\Rasterizer\\colour_optimised.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{21FA78E7-98FB-454C-8E6B-94761B9FEFA0}|Rasterizer\\Rasterizer.vcxproj|C:\\Users\\Davi\\source\\Optimisation_Rasterizer\\Rasterizer\\Rasterizer\\Rasterizer\\renderer.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{21FA78E7-98FB-454C-8E6B-94761B9FEFA0}|Rasterizer\\Rasterizer.vcxproj|solutionrelative:Rasterizer\\Rasterizer\\renderer.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{21FA78E7-98FB-454C-8E6B-94761B9FEFA0}|Rasterizer\\Rasterizer.vcxproj|C:\\Users\\Davi\\source\\Optimisation_Rasterizer\\Rasterizer\\Rasterizer\\Rasterizer\\raster.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{21FA78E7-98FB-454C-8E6B-94761B9FEFA0}|Rasterizer\\Rasterizer.vcxproj|solutionrelative:Rasterizer\\Rasterizer\\raster.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{21FA78E7-98FB-454C-8E6B-94761B9FEFA0}|Rasterizer\\Rasterizer.vcxproj|C:\\Users\\Davi\\source\\Optimisation_Rasterizer\\Rasterizer\\Rasterizer\\Rasterizer\\matrix.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{21FA78E7-98FB-454C-8E6B-94761B9FEFA0}|Rasterizer\\Rasterizer.vcxproj|solutionrelative:Rasterizer\\Rasterizer\\matrix.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{21FA78E7-98FB-454C-8E6B-94761B9FEFA0}|Rasterizer\\Rasterizer.vcxproj|C:\\Users\\Davi\\source\\Optimisation_Rasterizer\\Rasterizer\\Rasterizer\\Rasterizer\\zbuffer.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{21FA78E7-98FB-454C-8E6B-94761B9FEFA0}|Rasterizer\\Rasterizer.vcxproj|solutionrelative:Rasterizer\\Rasterizer\\zbuffer.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{21FA78E7-98FB-454C-8E6B-94761B9FEFA0}|Rasterizer\\Rasterizer.vcxproj|C:\\Users\\Davi\\source\\Optimisation_Rasterizer\\Rasterizer\\Rasterizer\\Rasterizer\\Vec4_Optimised.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
@@ -13,34 +45,6 @@
     {
       "AbsoluteMoniker": "D:0:0:{21FA78E7-98FB-454C-8E6B-94761B9FEFA0}|Rasterizer\\Rasterizer.vcxproj|C:\\Users\\Davi\\source\\Optimisation_Rasterizer\\Rasterizer\\Rasterizer\\Rasterizer\\vec4.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
       "RelativeMoniker": "D:0:0:{21FA78E7-98FB-454C-8E6B-94761B9FEFA0}|Rasterizer\\Rasterizer.vcxproj|solutionrelative:Rasterizer\\Rasterizer\\vec4.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{21FA78E7-98FB-454C-8E6B-94761B9FEFA0}|Rasterizer\\Rasterizer.vcxproj|C:\\Users\\Davi\\source\\Optimisation_Rasterizer\\Rasterizer\\Rasterizer\\Rasterizer\\mesh_Optimised.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
-      "RelativeMoniker": "D:0:0:{21FA78E7-98FB-454C-8E6B-94761B9FEFA0}|Rasterizer\\Rasterizer.vcxproj|solutionrelative:Rasterizer\\Rasterizer\\mesh_Optimised.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{21FA78E7-98FB-454C-8E6B-94761B9FEFA0}|Rasterizer\\Rasterizer.vcxproj|C:\\Users\\Davi\\source\\Optimisation_Rasterizer\\Rasterizer\\Rasterizer\\Rasterizer\\triangle.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
-      "RelativeMoniker": "D:0:0:{21FA78E7-98FB-454C-8E6B-94761B9FEFA0}|Rasterizer\\Rasterizer.vcxproj|solutionrelative:Rasterizer\\Rasterizer\\triangle.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{21FA78E7-98FB-454C-8E6B-94761B9FEFA0}|Rasterizer\\Rasterizer.vcxproj|C:\\Users\\Davi\\source\\Optimisation_Rasterizer\\Rasterizer\\Rasterizer\\Rasterizer\\TestTools.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
-      "RelativeMoniker": "D:0:0:{21FA78E7-98FB-454C-8E6B-94761B9FEFA0}|Rasterizer\\Rasterizer.vcxproj|solutionrelative:Rasterizer\\Rasterizer\\TestTools.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{21FA78E7-98FB-454C-8E6B-94761B9FEFA0}|Rasterizer\\Rasterizer.vcxproj|C:\\Users\\Davi\\source\\Optimisation_Rasterizer\\Rasterizer\\Rasterizer\\Rasterizer\\GamesEngineeringBase.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
-      "RelativeMoniker": "D:0:0:{21FA78E7-98FB-454C-8E6B-94761B9FEFA0}|Rasterizer\\Rasterizer.vcxproj|solutionrelative:Rasterizer\\Rasterizer\\GamesEngineeringBase.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{21FA78E7-98FB-454C-8E6B-94761B9FEFA0}|Rasterizer\\Rasterizer.vcxproj|C:\\Users\\Davi\\source\\Optimisation_Rasterizer\\Rasterizer\\Rasterizer\\Rasterizer\\zbuffer.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
-      "RelativeMoniker": "D:0:0:{21FA78E7-98FB-454C-8E6B-94761B9FEFA0}|Rasterizer\\Rasterizer.vcxproj|solutionrelative:Rasterizer\\Rasterizer\\zbuffer.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{21FA78E7-98FB-454C-8E6B-94761B9FEFA0}|Rasterizer\\Rasterizer.vcxproj|C:\\Users\\Davi\\source\\Optimisation_Rasterizer\\Rasterizer\\Rasterizer\\Rasterizer\\renderer.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
-      "RelativeMoniker": "D:0:0:{21FA78E7-98FB-454C-8E6B-94761B9FEFA0}|Rasterizer\\Rasterizer.vcxproj|solutionrelative:Rasterizer\\Rasterizer\\renderer.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{21FA78E7-98FB-454C-8E6B-94761B9FEFA0}|Rasterizer\\Rasterizer.vcxproj|C:\\Users\\Davi\\source\\Optimisation_Rasterizer\\Rasterizer\\Rasterizer\\Rasterizer\\colour.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
-      "RelativeMoniker": "D:0:0:{21FA78E7-98FB-454C-8E6B-94761B9FEFA0}|Rasterizer\\Rasterizer.vcxproj|solutionrelative:Rasterizer\\Rasterizer\\colour.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
     }
   ],
   "DocumentGroupContainers": [
@@ -50,138 +54,179 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 1,
+          "SelectedChildIndex": 7,
           "Children": [
             {
               "$type": "Bookmark",
               "Name": "ST:0:0:{aa2115a1-9712-457b-9047-dbb71ca2cdd2}"
             },
             {
+              "$type": "Bookmark",
+              "Name": "ST:128:0:{116d2292-e37d-41cd-a077-ebacac4c8cc4}"
+            },
+            {
               "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "matrix_optimised.h",
-              "DocumentMoniker": "C:\\Users\\Davi\\source\\Optimisation_Rasterizer\\Rasterizer\\Rasterizer\\Rasterizer\\matrix_optimised.h",
-              "RelativeDocumentMoniker": "Rasterizer\\Rasterizer\\matrix_optimised.h",
-              "ToolTip": "C:\\Users\\Davi\\source\\Optimisation_Rasterizer\\Rasterizer\\Rasterizer\\Rasterizer\\matrix_optimised.h",
-              "RelativeToolTip": "Rasterizer\\Rasterizer\\matrix_optimised.h",
-              "ViewState": "AgIAACAAAAAAAAAAAAAowCoAAAA0AAAAAAAAAA==",
+              "DocumentIndex": 4,
+              "Title": "colour_optimised.h",
+              "DocumentMoniker": "C:\\Users\\Davi\\source\\Optimisation_Rasterizer\\Rasterizer\\Rasterizer\\Rasterizer\\colour_optimised.h",
+              "RelativeDocumentMoniker": "Rasterizer\\Rasterizer\\colour_optimised.h",
+              "ToolTip": "C:\\Users\\Davi\\source\\Optimisation_Rasterizer\\Rasterizer\\Rasterizer\\Rasterizer\\colour_optimised.h",
+              "RelativeToolTip": "Rasterizer\\Rasterizer\\colour_optimised.h",
+              "ViewState": "AgIAADkAAAAAAAAAAAAAAEQAAAAkAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
-              "WhenOpened": "2025-01-26T21:05:05.799Z",
+              "WhenOpened": "2025-01-31T23:57:34.56Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 9,
               "Title": "Vec4_Optimised.h",
               "DocumentMoniker": "C:\\Users\\Davi\\source\\Optimisation_Rasterizer\\Rasterizer\\Rasterizer\\Rasterizer\\Vec4_Optimised.h",
               "RelativeDocumentMoniker": "Rasterizer\\Rasterizer\\Vec4_Optimised.h",
               "ToolTip": "C:\\Users\\Davi\\source\\Optimisation_Rasterizer\\Rasterizer\\Rasterizer\\Rasterizer\\Vec4_Optimised.h",
               "RelativeToolTip": "Rasterizer\\Rasterizer\\Vec4_Optimised.h",
-              "ViewState": "AgIAAE4AAAAAAAAAAAAAAGsAAAApAAAAAAAAAA==",
+              "ViewState": "AgIAACQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
-              "WhenOpened": "2025-01-21T17:06:03.785Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 3,
-              "Title": "mesh_Optimised.h",
-              "DocumentMoniker": "C:\\Users\\Davi\\source\\Optimisation_Rasterizer\\Rasterizer\\Rasterizer\\Rasterizer\\mesh_Optimised.h",
-              "RelativeDocumentMoniker": "Rasterizer\\Rasterizer\\mesh_Optimised.h",
-              "ToolTip": "C:\\Users\\Davi\\source\\Optimisation_Rasterizer\\Rasterizer\\Rasterizer\\Rasterizer\\mesh_Optimised.h",
-              "RelativeToolTip": "Rasterizer\\Rasterizer\\mesh_Optimised.h",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAGYAAAAvAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
-              "WhenOpened": "2025-01-22T11:35:02.814Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 5,
-              "Title": "TestTools.h",
-              "DocumentMoniker": "C:\\Users\\Davi\\source\\Optimisation_Rasterizer\\Rasterizer\\Rasterizer\\Rasterizer\\TestTools.h",
-              "RelativeDocumentMoniker": "Rasterizer\\Rasterizer\\TestTools.h",
-              "ToolTip": "C:\\Users\\Davi\\source\\Optimisation_Rasterizer\\Rasterizer\\Rasterizer\\Rasterizer\\TestTools.h",
-              "RelativeToolTip": "Rasterizer\\Rasterizer\\TestTools.h",
-              "ViewState": "AgIAAAsAAAAAAAAAAAAAABAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
-              "WhenOpened": "2025-01-15T18:19:08.631Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 4,
-              "Title": "triangle.h",
-              "DocumentMoniker": "C:\\Users\\Davi\\source\\Optimisation_Rasterizer\\Rasterizer\\Rasterizer\\Rasterizer\\triangle.h",
-              "RelativeDocumentMoniker": "Rasterizer\\Rasterizer\\triangle.h",
-              "ToolTip": "C:\\Users\\Davi\\source\\Optimisation_Rasterizer\\Rasterizer\\Rasterizer\\Rasterizer\\triangle.h",
-              "RelativeToolTip": "Rasterizer\\Rasterizer\\triangle.h",
-              "ViewState": "AgIAALYAAAAAAAAAAAD4v5cAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
-              "WhenOpened": "2025-01-15T14:04:58.997Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "vec4.h",
-              "DocumentMoniker": "C:\\Users\\Davi\\source\\Optimisation_Rasterizer\\Rasterizer\\Rasterizer\\Rasterizer\\vec4.h",
-              "RelativeDocumentMoniker": "Rasterizer\\Rasterizer\\vec4.h",
-              "ToolTip": "C:\\Users\\Davi\\source\\Optimisation_Rasterizer\\Rasterizer\\Rasterizer\\Rasterizer\\vec4.h",
-              "RelativeToolTip": "Rasterizer\\Rasterizer\\vec4.h",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAsAAAARAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
-              "WhenOpened": "2025-01-22T11:52:46.139Z",
+              "WhenOpened": "2025-01-31T18:13:28.062Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 6,
-              "Title": "GamesEngineeringBase.h",
-              "DocumentMoniker": "C:\\Users\\Davi\\source\\Optimisation_Rasterizer\\Rasterizer\\Rasterizer\\Rasterizer\\GamesEngineeringBase.h",
-              "RelativeDocumentMoniker": "Rasterizer\\Rasterizer\\GamesEngineeringBase.h",
-              "ToolTip": "C:\\Users\\Davi\\source\\Optimisation_Rasterizer\\Rasterizer\\Rasterizer\\Rasterizer\\GamesEngineeringBase.h",
-              "RelativeToolTip": "Rasterizer\\Rasterizer\\GamesEngineeringBase.h",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
-              "WhenOpened": "2025-01-21T22:26:45.664Z",
+              "Title": "raster.cpp",
+              "DocumentMoniker": "C:\\Users\\Davi\\source\\Optimisation_Rasterizer\\Rasterizer\\Rasterizer\\Rasterizer\\raster.cpp",
+              "RelativeDocumentMoniker": "Rasterizer\\Rasterizer\\raster.cpp",
+              "ToolTip": "C:\\Users\\Davi\\source\\Optimisation_Rasterizer\\Rasterizer\\Rasterizer\\Rasterizer\\raster.cpp",
+              "RelativeToolTip": "Rasterizer\\Rasterizer\\raster.cpp",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAuwAkAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
+              "WhenOpened": "2025-01-31T15:33:49.528Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 8,
+              "DocumentIndex": 7,
+              "Title": "matrix.h",
+              "DocumentMoniker": "C:\\Users\\Davi\\source\\Optimisation_Rasterizer\\Rasterizer\\Rasterizer\\Rasterizer\\matrix.h",
+              "RelativeDocumentMoniker": "Rasterizer\\Rasterizer\\matrix.h",
+              "ToolTip": "C:\\Users\\Davi\\source\\Optimisation_Rasterizer\\Rasterizer\\Rasterizer\\Rasterizer\\matrix.h",
+              "RelativeToolTip": "Rasterizer\\Rasterizer\\matrix.h",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAUAAAAcAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
+              "WhenOpened": "2025-01-31T12:15:18.384Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "mesh.h",
+              "DocumentMoniker": "C:\\Users\\Davi\\source\\Optimisation_Rasterizer\\Rasterizer\\Rasterizer\\Rasterizer\\mesh.h",
+              "RelativeDocumentMoniker": "Rasterizer\\Rasterizer\\mesh.h",
+              "ToolTip": "C:\\Users\\Davi\\source\\Optimisation_Rasterizer\\Rasterizer\\Rasterizer\\Rasterizer\\mesh.h",
+              "RelativeToolTip": "Rasterizer\\Rasterizer\\mesh.h",
+              "ViewState": "AgIAAHsAAAAAAAAAAAAAAJgAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
+              "WhenOpened": "2025-01-31T12:12:51.093Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "RNG.h",
+              "DocumentMoniker": "C:\\Users\\Davi\\source\\Optimisation_Rasterizer\\Rasterizer\\Rasterizer\\Rasterizer\\RNG.h",
+              "RelativeDocumentMoniker": "Rasterizer\\Rasterizer\\RNG.h",
+              "ToolTip": "C:\\Users\\Davi\\source\\Optimisation_Rasterizer\\Rasterizer\\Rasterizer\\Rasterizer\\RNG.h",
+              "RelativeToolTip": "Rasterizer\\Rasterizer\\RNG.h",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAACQAAAACAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
+              "WhenOpened": "2025-01-31T12:12:43.111Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "mesh_Optimised.h",
+              "DocumentMoniker": "C:\\Users\\Davi\\source\\Optimisation_Rasterizer\\Rasterizer\\Rasterizer\\Rasterizer\\mesh_Optimised.h",
+              "RelativeDocumentMoniker": "Rasterizer\\Rasterizer\\mesh_Optimised.h",
+              "ToolTip": "C:\\Users\\Davi\\source\\Optimisation_Rasterizer\\Rasterizer\\Rasterizer\\Rasterizer\\mesh_Optimised.h",
+              "RelativeToolTip": "Rasterizer\\Rasterizer\\mesh_Optimised.h",
+              "ViewState": "AgIAANAAAAAAAAAAAAAAANwAAAA0AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
+              "WhenOpened": "2025-01-31T12:15:07.559Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
               "Title": "renderer.h",
               "DocumentMoniker": "C:\\Users\\Davi\\source\\Optimisation_Rasterizer\\Rasterizer\\Rasterizer\\Rasterizer\\renderer.h",
               "RelativeDocumentMoniker": "Rasterizer\\Rasterizer\\renderer.h",
               "ToolTip": "C:\\Users\\Davi\\source\\Optimisation_Rasterizer\\Rasterizer\\Rasterizer\\Rasterizer\\renderer.h",
               "RelativeToolTip": "Rasterizer\\Rasterizer\\renderer.h",
-              "ViewState": "AgIAABgAAAAAAAAAAAAAABUAAAAsAAAAAAAAAA==",
+              "ViewState": "AgIAAAkAAAAAAAAAAAAAAA8AAAAHAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
-              "WhenOpened": "2025-01-15T14:08:47.646Z"
+              "WhenOpened": "2025-01-15T14:08:47.646Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 7,
-              "Title": "zbuffer.h",
-              "DocumentMoniker": "C:\\Users\\Davi\\source\\Optimisation_Rasterizer\\Rasterizer\\Rasterizer\\Rasterizer\\zbuffer.h",
-              "RelativeDocumentMoniker": "Rasterizer\\Rasterizer\\zbuffer.h",
-              "ToolTip": "C:\\Users\\Davi\\source\\Optimisation_Rasterizer\\Rasterizer\\Rasterizer\\Rasterizer\\zbuffer.h",
-              "RelativeToolTip": "Rasterizer\\Rasterizer\\zbuffer.h",
-              "ViewState": "AgIAABoAAAAAAAAAAAAAAAcAAAAUAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
-              "WhenOpened": "2025-01-15T14:04:46.925Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 9,
+              "DocumentIndex": 3,
               "Title": "colour.h",
               "DocumentMoniker": "C:\\Users\\Davi\\source\\Optimisation_Rasterizer\\Rasterizer\\Rasterizer\\Rasterizer\\colour.h",
               "RelativeDocumentMoniker": "Rasterizer\\Rasterizer\\colour.h",
               "ToolTip": "C:\\Users\\Davi\\source\\Optimisation_Rasterizer\\Rasterizer\\Rasterizer\\Rasterizer\\colour.h",
               "RelativeToolTip": "Rasterizer\\Rasterizer\\colour.h",
-              "ViewState": "AgIAAFcAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAACUAAAAAAAAAAAAAADMAAAAZAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
-              "WhenOpened": "2025-01-21T22:26:47.086Z"
+              "WhenOpened": "2025-01-21T22:26:47.086Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
+              "Title": "zbuffer.h",
+              "DocumentMoniker": "C:\\Users\\Davi\\source\\Optimisation_Rasterizer\\Rasterizer\\Rasterizer\\Rasterizer\\zbuffer.h",
+              "RelativeDocumentMoniker": "Rasterizer\\Rasterizer\\zbuffer.h",
+              "ToolTip": "C:\\Users\\Davi\\source\\Optimisation_Rasterizer\\Rasterizer\\Rasterizer\\Rasterizer\\zbuffer.h",
+              "RelativeToolTip": "Rasterizer\\Rasterizer\\zbuffer.h",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAcAAAAUAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
+              "WhenOpened": "2025-01-15T14:04:46.925Z",
+              "EditorCaption": ""
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "FloatingWindowState": {
+        "Id": "71701f5d-c3d9-425c-81e9-2768b5c87c1a",
+        "Display": 0,
+        "X": -815,
+        "Y": 37,
+        "Width": 1386,
+        "Height": 657,
+        "WindowState": 0
+      },
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 0,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 10,
+              "Title": "vec4.h",
+              "DocumentMoniker": "C:\\Users\\Davi\\source\\Optimisation_Rasterizer\\Rasterizer\\Rasterizer\\Rasterizer\\vec4.h",
+              "RelativeDocumentMoniker": "Rasterizer\\Rasterizer\\vec4.h",
+              "ToolTip": "C:\\Users\\Davi\\source\\Optimisation_Rasterizer\\Rasterizer\\Rasterizer\\Rasterizer\\vec4.h",
+              "RelativeToolTip": "Rasterizer\\Rasterizer\\vec4.h",
+              "ViewState": "AgIAAFEAAAAAAAAAAAAkwHAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
+              "WhenOpened": "2025-01-22T11:52:46.139Z",
+              "EditorCaption": ""
             }
           ]
         }

@@ -1,6 +1,7 @@
 #pragma once
 
-#include "vec4.h"
+#include "Vec4_Optimised.h"
+//#include "vec4.h"
 #include "colour.h"
 
 // keep light straightforward - struct for storing information

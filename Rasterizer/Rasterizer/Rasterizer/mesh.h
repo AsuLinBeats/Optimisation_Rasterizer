@@ -2,8 +2,11 @@
 
 #include <vector>
 #include <iostream>
-#include "vec4.h"
+#include <immintrin.h>
+#include "Vec4_Optimised.h"
+//#include "vec4.h"
 #include "matrix.h"
+//#include "matrix_optimised.h"
 #include "colour.h"
 #include<cmath>
 // Represents a vertex in a 3D mesh, including its position, normal, and color
@@ -147,6 +150,7 @@ public:
             vec4(0, -1, 0, 0),
             vec4(0, 1, 0, 0)
         };
+
 
         // Add vertices and triangles for each face
         int faceIndices[6][4] = {

@@ -2,7 +2,8 @@
 
 #include <iostream>
 #include <vector>
-#include "vec4.h"
+//#include "vec4.h"
+ #include "Vec4_Optimised.h"
 
 // Matrix class for 4x4 transformation matrices
 class matrix {

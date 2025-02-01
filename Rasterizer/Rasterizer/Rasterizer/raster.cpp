@@ -8,6 +8,7 @@
 
 #include <cmath>
 #include "matrix.h"
+//#include "matrix_optimised.h"
 #include "colour.h"
 #include "mesh.h"
 #include "zbuffer.h"
@@ -258,15 +259,43 @@ void scene2() {
 }
 
 void Scene3() {
-    // Scene3 was designed to test shading?...
+    // Scene3 was designed to test situation for multimesh rendering(can show the advantage of AVX clearly)
+    Renderer renderer;
+    matrix camera;
 
+    Light L{ vec4(0.f, 1.f, 1.f, 0.f), colour(1.0f, 1.0f, 1.0f), colour(0.1f, 0.1f, 0.1f) };
+    Light L1{ vec4(2.f, 0.f, 0.f, 0.f), colour(156.0f, 122.0f, 155.0f), colour(0.1f, 0.1f, 0.1f) };
+
+    bool running = true;
+
+    std::vector<Mesh*> scene;
+
+    // make a sphere
+    Mesh* sphere = new Mesh();
+    *sphere = Mesh::makeSphere(1.0f, 10, 20);
+    scene.push_back(sphere);
+    float sphereOffset = -6.f;
+    float sphereStep = 0.1f;
+    sphere->world = matrix::makeTranslation(sphereOffset, 0.f, -6.f);
+
+    auto start = std::chrono::high_resolution_clock::now();
+    std::chrono::time_point<std::chrono::high_resolution_clock> end;
+    int cycle = 0;
 
 }
 // Entry point of the application
 // No input variables
 int main() {
+
+    auto start = std::chrono::high_resolution_clock::now();
+    scene2();
+    auto end = std::chrono::high_resolution_clock::now();
+    std::cout << "Time doing some work : "
+        << std::chrono::duration<double, std::milli>(end - start).count()
+        << " ms\n";
+   // std::cout << sum << std::endl;
     // Uncomment the desired scene function to run
-    scene1();
+    // scene1();
    // scene2();
     //sceneTest(); 
     
