@@ -60,6 +60,15 @@
     <ClInclude Include="Rasterizer\colour_optimised.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Rasterizer\zbuffer_optimised.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Rasterizer\triangle_optimised.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Rasterizer\renderer_optimised.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Rasterizer\raster.cpp">

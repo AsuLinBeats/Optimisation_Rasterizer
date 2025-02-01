@@ -5,9 +5,10 @@
 #include <immintrin.h>
 #include "Vec4_Optimised.h"
 //#include "vec4.h"
-#include "matrix.h"
-//#include "matrix_optimised.h"
+// #include "matrix.h"
+#include "matrix_optimised.h"
 #include "colour.h"
+// #include "colour_optimised.h"
 #include<cmath>
 // Represents a vertex in a 3D mesh, including its position, normal, and color
 struct Vertex {

@@ -1,8 +1,8 @@
 ﻿  raster.cpp
-C:\Users\Davi\source\Optimisation_Rasterizer\Rasterizer\Rasterizer\Rasterizer\mesh.h(201,25): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+C:\Users\Davi\source\Optimisation_Rasterizer\Rasterizer\Rasterizer\Rasterizer\mesh.h(202,25): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
   (compiling source file 'Rasterizer/raster.cpp')
   
-C:\Users\Davi\source\Optimisation_Rasterizer\Rasterizer\Rasterizer\Rasterizer\mesh.h(206,27): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+C:\Users\Davi\source\Optimisation_Rasterizer\Rasterizer\Rasterizer\Rasterizer\mesh.h(207,27): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
   (compiling source file 'Rasterizer/raster.cpp')
   
 C:\Users\Davi\source\Optimisation_Rasterizer\Rasterizer\Rasterizer\Rasterizer\renderer.h(12,30): warning C4305: 'initializing': truncation from 'double' to 'float'

@@ -39,8 +39,8 @@ public:
         __m128 vec = _mm_load_ps(v.v);
 
         for (unsigned int i = 0; i < 4; i++) {
-            __m128 row = _mm_set_ps(a[0+4*i], a[1 + 4*i], a[2 + 4*i], a[3 + 4*i]); // represent each row
-            __m128 product = _mm_dp_ps(row, vec, NULL); // well, avx has built in dot product 
+            __m128 row = _mm_set_ps(m[i][3], m[i][2], m[i][1], m[i][0]); // represent each row
+            __m128 product = _mm_dp_ps(row, vec, 0xFF); // well, avx has built in dot product 
             _mm_store_ss(&result[i], product);
         }
         return result;
@@ -96,7 +96,7 @@ public:
         m.zero();
 
         float tanHalfFov = tan(fov / 2.0f);
-        float range = n - f;
+        float range = f - n;
 
         m.m[0][0] = 1.0f / (aspect * tanHalfFov);
         m.m[1][1] = 1.0f / tanHalfFov;
@@ -124,12 +124,12 @@ public:
         float sinA = sin(aRad);
         float cosA = cos(aRad);
         
-        __m128 row2 = _mm_set_ps(0.0f, 0.0f, -sinA, cosA);
-        _mm_store_ps(&m.m[2][0], row2); // Third row
+        __m128 row0 = _mm_set_ps(0.0f, 0.0f, -sinA, cosA);
+        _mm_store_ps(&m.m[0][0], row0); // Third row
 
         // last row
-        __m128 row3 = _mm_set_ps(1.0f, 0.0f, 0.0f, 0.0f);
-        _mm_store_ps(&m.m[3][0], row3);
+        __m128 row1 = _mm_set_ps(0.0f, 0.0f, cosA, sinA);
+        _mm_store_ps(&m.m[1][0], row1);
 
         return m;
     }
@@ -142,15 +142,11 @@ public:
         float sinA = sin(aRad);
         float cosA = cos(aRad);
 
-        __m256 row1 = _mm256_set_ps(
-            0.0f, 0.0f, 0.f, 0.f,
-            0.0f, -sinA, cosA, 0.f   
-        );
-        _mm256_store_ps(&m.a[0], row1);
-
-        __m256 row2 = _mm256_set_ps(0.0f, cosA, sinA, 0.0f,
-            1.0f, 0.0f, 0.0f, 0.0f);  // [0,0,0,1]
-        _mm256_store_ps(&m.a[8], row2);
+        __m128 row1 = _mm_set_ps(0.0f, -sinA, cosA, 0.0f);
+        _mm_store_ps(&m.m[1][0], row1);
+        
+        __m128 row2 = _mm_set_ps(0.0f, cosA, sinA, 0.0f);
+        _mm_store_ps(&m.m[2][0], row2);
 
         return m;
     }
@@ -162,21 +158,19 @@ public:
         float sinA = sin(aRad);
         float cosA = cos(aRad);
 
-        __m256 row1 = _mm256_set_ps(
-            0.0f, sinA, 0.f, cosA,
-            0.0f, 0.f, 0.f, 0.f
-        );
-        _mm256_store_ps(&m.a[0], row1);
+        __m128 row0 = _mm_set_ps(0.0f, sinA, 0.0f, cosA);
+        _mm_store_ps(&m.m[0][0], row0);
 
-        __m256 row2 = _mm256_set_ps(0.f, cosA, 0.f, -sinA,
-            1.0f, 0.0f, 0.0f, 0.0f);  // [0,0,0,1]
-        _mm256_store_ps(&m.a[8], row2);
+        __m128 row2 = _mm_set_ps(0.0f, cosA, 0.0f, -sinA);
+        _mm_store_ps(&m.m[2][0], row2);
 
         return m;
 
     }
 
-
+    //static matrix makeRotateXYZ(float x, float y, float z) {
+    //    return matrix::makeRotateX(x) * matrix::makeRotateY(y) * matrix::makeRotateZ(z);
+    //}
     static matrix makeRotateXYZ(float x, float y, float z) {
         // the original one will invoke 3 functions and there are many overlaps.
        //! Change to this for now
@@ -215,15 +209,13 @@ public:
         matrix m;
         s = max(s, 0.01f); // Ensure scaling factor is not too small
         // try not invoke identity()
-        __m128 zero = _mm_setzero_ps();
-        _mm_store_ps(&m.a[0], zero);  
-        _mm_store_ps(&m.a[4], zero);   
-        _mm_store_ps(&m.a[8], zero);  
-
-        __m128 s_vec = _mm_set_ss(s);  // [s, 0, 0, 0]
-        _mm_store_ss(&m.a[0], s_vec);  // a[0] = s
-        _mm_store_ss(&m.a[5], s_vec);  // a[5] = s
-        _mm_store_ss(&m.a[10], s_vec); // a[10] = s
+        _mm_store_ps(&m.a[0], _mm_setzero_ps());
+        _mm_store_ps(&m.a[4], _mm_setzero_ps());
+        _mm_store_ps(&m.a[8], _mm_setzero_ps());
+        _mm_store_ps(&m.a[12], _mm_setzero_ps());
+        _mm_store_ss(&m.a[0], _mm_set_ss(s));  // a[0] = s
+        _mm_store_ss(&m.a[5], _mm_set_ss(s));  // a[5] = s
+        _mm_store_ss(&m.a[10], _mm_set_ss(s)); // a[10] = s
         m.a[15] = 1.0f;
         return m;
     }

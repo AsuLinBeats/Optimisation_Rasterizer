@@ -140,12 +140,15 @@
     <ClInclude Include="Rasterizer\matrix.h" />
     <ClInclude Include="Rasterizer\mesh.h" />
     <ClInclude Include="Rasterizer\renderer.h" />
+    <ClInclude Include="Rasterizer\renderer_optimised.h" />
     <ClInclude Include="Rasterizer\RNG.h" />
     <ClInclude Include="Rasterizer\triangle.h" />
+    <ClInclude Include="Rasterizer\triangle_optimised.h" />
     <ClInclude Include="Rasterizer\vec4.h" />
     <ClInclude Include="Rasterizer\zbuffer.h" />
     <ClInclude Include="Rasterizer\TestTools.h" />
     <ClInclude Include="Rasterizer\Vec4_Optimised.h" />
+    <ClInclude Include="Rasterizer\zbuffer_optimised.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Rasterizer\raster.cpp" />

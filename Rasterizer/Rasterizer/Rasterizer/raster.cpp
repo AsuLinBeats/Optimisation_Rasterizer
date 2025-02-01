@@ -7,11 +7,13 @@
 #include <chrono>
 
 #include <cmath>
-#include "matrix.h"
-//#include "matrix_optimised.h"
+//#include "matrix.h"
+#include "matrix_optimised.h"
 #include "colour.h"
+// #include "colour_optimised.h"
 #include "mesh.h"
-#include "zbuffer.h"
+// #include "zbuffer.h"
+#include "zbuffer_optimised.h"
 #include "renderer.h"
 #include "RNG.h"
 #include "light.h"
@@ -258,7 +260,7 @@ void scene2() {
         delete m;
 }
 
-void Scene3() {
+void scene3() {
     // Scene3 was designed to test situation for multimesh rendering(can show the advantage of AVX clearly)
     Renderer renderer;
     matrix camera;
@@ -282,17 +284,50 @@ void Scene3() {
     std::chrono::time_point<std::chrono::high_resolution_clock> end;
     int cycle = 0;
 
+
+    RandomNumberGenerator& rng = RandomNumberGenerator::getInstance();
+
+    struct rRot { float x; float y; float z; }; // Structure to store random rotation parameters
+    std::vector<rRot> rotations;
+    // Create a grid of cubes with random rotations
+    for (unsigned int y = 0; y < 100; y++) {
+        for (unsigned int x = 0; x < 1000; x++) {
+            Mesh* m = new Mesh();
+            *m = Mesh::makeCube(1.f);
+            scene.push_back(m);
+            m->world = matrix::makeTranslation(-7.0f + (static_cast<float>(x) * 2.f), 5.0f - (static_cast<float>(y) * 2.f), -8.f);
+            rRot r{ rng.getRandomFloat(-.1f, .1f), rng.getRandomFloat(-.1f, .1f), rng.getRandomFloat(-.1f, .1f) };
+            rotations.push_back(r);
+        }
+    }
+
 }
+
+void printFPS() {
+    static std::chrono::time_point<std::chrono::steady_clock> oldTime = std::chrono::high_resolution_clock::now();
+    static int fps; fps++;
+
+    if (std::chrono::duration_cast<std::chrono::seconds>(std::chrono::high_resolution_clock::now() - oldTime) >= std::chrono::seconds{ 1 }) {
+        oldTime = std::chrono::high_resolution_clock::now();
+        std::cout << "FPS: " << fps << std::endl;
+        fps = 0;
+    }
+}
+
 // Entry point of the application
 // No input variables
 int main() {
-
+    // Time test
     auto start = std::chrono::high_resolution_clock::now();
     scene2();
     auto end = std::chrono::high_resolution_clock::now();
     std::cout << "Time doing some work : "
         << std::chrono::duration<double, std::milli>(end - start).count()
         << " ms\n";
+
+
+    //scene3();
+    //printFPS();
    // std::cout << sum << std::endl;
     // Uncomment the desired scene function to run
     // scene1();
