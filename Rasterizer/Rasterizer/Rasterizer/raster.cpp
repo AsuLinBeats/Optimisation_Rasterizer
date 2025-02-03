@@ -53,18 +53,16 @@ void render(Renderer& renderer, Mesh* mesh, const matrix& camera, const Light& L
             transformedVertices[ind.v[2]]
         };
 
-        // Backface culling:
-        //  - Compute a camera direction based on the first vertex position.
-        //  - Compute two edge vectors and then the face normal.
-        //  - If the triangle normal faces away from the camera, skip rendering.
+        // Backface culling: logic
+        // Compute a camera direction based on the first vertex position.
         vec4 camDir = t[0].p;
         camDir.normalise();
-
+        // Compute two edge vectors and then the face normal.
         vec4 edge1 = t[1].p - t[0].p;
         vec4 edge2 = t[2].p - t[0].p;
         vec4 triangleNormal = vec4::cross(edge1, edge2);
         triangleNormal.normalise();
-
+        // skip rendering if normal faces away from the camera
         if (triangleNormal.dot(camDir) > 0.0f)
             continue;
 
@@ -87,7 +85,6 @@ void render(Renderer& renderer, Mesh* mesh, const matrix& camera, const Light& L
         if (fabs(t[0].p[2]) > 1.0f || fabs(t[1].p[2]) > 1.0f || fabs(t[2].p[2]) > 1.0f)
             continue;
 
-        // Draw triangles
         triangle tri(t[0], t[1], t[2]);
         tri.draw(renderer, L, mesh->ka, mesh->kd);
     }
@@ -99,7 +96,7 @@ void renderThread(Renderer& renderer, const std::vector<Mesh*>& meshes, const ma
     }
 }
 
-void multithreadedRender(Renderer& renderer, const std::vector<Mesh*>& scene, const matrix& camera, const Light& L, int numThreads) {
+void multiRender(Renderer& renderer, const std::vector<Mesh*>& scene, const matrix& camera, const Light& L, int numThreads) {
     std::vector<std::thread> threads;
     size_t totalMeshes = scene.size();
     size_t meshesPerThread = (totalMeshes + numThreads - 1) / numThreads;  // Allocate meshes for each threads
@@ -161,7 +158,7 @@ void sceneTest() {
         if (renderer.canvas.keyPressed('Q')) z += 0.1f;
         if (renderer.canvas.keyPressed('E')) z += -0.1f;
 
-        multithreadedRender(renderer, scene, camera, L, numThreads);
+        multiRender(renderer, scene, camera, L, numThreads);
 
         renderer.present(); // Display the rendered frame
     }
@@ -181,6 +178,7 @@ matrix makeRandomRotation() {
     }
 }
 
+// ! if you want to evaluate these scenes using multithreads, need to set numThread manually. it is not parameter due to ddl
 // Function to render a scene with multiple objects and dynamic transformations
 // No input variables
 void scene1() {
@@ -235,7 +233,7 @@ void scene1() {
             }
         }
 
-       multithreadedRender(renderer, scene, camera, L, numThreads);
+        multiRender(renderer, scene, camera, L, numThreads);
         //for (Mesh* m : scene) {
         //    render(renderer, m, camera, L);
         //}
@@ -307,7 +305,7 @@ void scene2() {
 
         if (renderer.canvas.keyPressed(VK_ESCAPE)) break;
 
-        //multithreadedRender(renderer, scene, camera, L, numThreads);
+        //multiRender(renderer, scene, camera, L, numThreads);
 		for (Mesh* m : scene) {
 			render(renderer, m, camera, L);
 		}
@@ -317,7 +315,7 @@ void scene2() {
     for (auto& m : scene)
         delete m;
 }
-
+// Many cubes, moving camera
 void scene3() {
     Renderer renderer;
     matrix camera;
@@ -370,7 +368,7 @@ void scene3() {
             }
         }
 
-        //multithreadedRender(renderer, scene, camera, L, numThreads);
+        //multiRender(renderer, scene, camera, L, numThreads);
         for (Mesh* m : scene) {
             render(renderer, m, camera, L);
         }
@@ -380,16 +378,6 @@ void scene3() {
     for (auto& m : scene) delete m;
 }
 
-void printFPS() {
-    static std::chrono::time_point<std::chrono::steady_clock> oldTime = std::chrono::high_resolution_clock::now();
-    static int fps; fps++;
-
-    if (std::chrono::duration_cast<std::chrono::seconds>(std::chrono::high_resolution_clock::now() - oldTime) >= std::chrono::seconds{ 1 }) {
-        oldTime = std::chrono::high_resolution_clock::now();
-        std::cout << "FPS: " << fps << std::endl;
-        fps = 0;
-    }
-}
 
 // Entry point of the application
 // No input variables

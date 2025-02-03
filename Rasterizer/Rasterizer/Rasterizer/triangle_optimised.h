@@ -72,241 +72,128 @@ public:
         return true;
     }
 
-    // Template function to interpolate values using barycentric coordinates
-    // Input Variables:
-    // - alpha, beta, gamma: Barycentric coordinates
-    // - a1, a2, a3: Values to interpolate
-    // Returns the interpolated value
 
     template <typename T>
     T interpolate(float alpha, float beta, float gamma, T a1, T a2, T a3) {
         return (a1 * alpha) + (a2 * beta) + (a3 * gamma);
     }
 
+    void draw(Renderer& renderer, const Light& L, float ka, float kd)
+    {
 
-    //void draw(Renderer& renderer, Light& L, float ka, float kd) {
-    //    // Precompute invariant light and shading values.
-    //    vec4 lightDir = L.omega_i;
-    //    lightDir.normalise();
-    //    // The ambient term (if kd is intended to modulate both diffuse and ambient)
-    //    colour ambientTerm = L.ambient * kd;
+        // exit if the triangle area is negligible
+        if (area < 1.f) return;
 
-    //    // Get the screen-space bounds of the triangle.
-    //    vec2D minV, maxV;
-    //    getBoundsWindow(renderer.canvas, minV, maxV);
+        // Determine the bounding box for this triangle
+        vec2D minV, maxV;
+        getBoundsWindow(renderer.canvas, minV, maxV);
 
-    //    // Skip very small triangles.
-    //    if (area < 1.f)
-    //        return;
-
-    //    // Precalculate the integer bounds for the loops.
-    //    int minY = static_cast<int>(minV.y);
-    //    int maxY = static_cast<int>(ceil(maxV.y));
-    //    int minX = static_cast<int>(minV.x);
-    //    int maxX = static_cast<int>(ceil(maxV.x));
-
-    //    // Iterate over the bounding box.
-    //    for (int y = minY; y < maxY; y++) {
-    //        for (int x = minX; x < maxX; x++) {
-    //            float alpha, beta, gamma;
-    //            // Create a vector for the current pixel.
-    //            vec2D p(static_cast<float>(x), static_cast<float>(y));
-
-    //            // Check if the pixel lies inside the triangle.
-    //            if (!getCoordinates(p, alpha, beta, gamma))
-    //                continue;
-
-    //            // Interpolate depth first so we can early-out if the pixel is hidden.
-    //            float depth = interpolate(beta, gamma, alpha,
-    //                v[0].p[2], v[1].p[2], v[2].p[2]);
-    //            if (depth <= 0.01f || renderer.zbuffer(x, y) <= depth)
-    //                continue;
-
-    //            // Now compute the per-pixel normal and color.
-    //            vec4 normal = interpolate(beta, gamma, alpha,
-    //                v[0].normal, v[1].normal, v[2].normal);
-    //            normal.normalise();
-    //            float dotProd = max(vec4::dot(lightDir, normal), 0.0f);
-
-    //            colour c = interpolate(beta, gamma, alpha,
-    //                v[0].rgb, v[1].rgb, v[2].rgb);
-    //            c.clampColour();
-
-    //            // Combine the shading components.
-    //            // (Here we assume that the diffuse term is modulated by kd as well.)
-    //            colour finalColor = (c * kd) * (L.L * dotProd + ambientTerm);
-
-    //            // Write the final pixel if visible.
-    //            unsigned char r, g, b;
-    //            finalColor.toRGB(r, g, b);
-    //            renderer.canvas.draw(x, y, r, g, b);
-    //            renderer.zbuffer(x, y) = depth;
-    //        }
-    //    }
-    //}
-    //void draw(Renderer& renderer, const Light& L, float ka, float kd) {
-    //    // Precompute invariant light and shading values.
-    //    vec4 lightDir = L.omega_i;  // Copy the light's vector.
-    //    lightDir.normalise();       // Normalize the copy.
-
-    //    // The ambient term (if kd is intended to modulate both diffuse and ambient)
-    //    colour ambientTerm = L.ambient * kd;
-
-    //    // Get the screen-space bounds of the triangle.
-    //    vec2D minV, maxV;
-    //    getBoundsWindow(renderer.canvas, minV, maxV);
-
-    //    // Skip very small triangles.
-    //    if (area < 1.f)
-    //        return;
-
-    //    // Precalculate the integer bounds for the loops.
-    //    int minY = static_cast<int>(minV.y);
-    //    int maxY = static_cast<int>(ceil(maxV.y));
-    //    int minX = static_cast<int>(minV.x);
-    //    int maxX = static_cast<int>(ceil(maxV.x));
-
-    //    // Iterate over the bounding box.
-    //    for (int y = minY; y < maxY; y++) {
-    //        for (int x = minX; x < maxX; x++) {
-    //            float alpha, beta, gamma;
-    //            // Create a vector for the current pixel.
-    //            vec2D p(static_cast<float>(x), static_cast<float>(y));
-
-    //            // Check if the pixel lies inside the triangle.
-    //            if (!getCoordinates(p, alpha, beta, gamma))
-    //                continue;
-
-    //            // Interpolate depth first so we can early-out if the pixel is hidden.
-    //            float depth = interpolate(beta, gamma, alpha,
-    //                v[0].p[2], v[1].p[2], v[2].p[2]);
-    //            if (depth <= 0.01f || renderer.zbuffer(x, y) <= depth)
-    //                continue;
-
-    //            // Now compute the per-pixel normal and color.
-    //            vec4 normal = interpolate(beta, gamma, alpha,
-    //                v[0].normal, v[1].normal, v[2].normal);
-    //            normal.normalise();
-    //            float dotProd = max(vec4::dot(lightDir, normal), 0.0f);
-
-    //            colour c = interpolate(beta, gamma, alpha,
-    //                v[0].rgb, v[1].rgb, v[2].rgb);
-    //            c.clampColour();
-
-    //            // Combine the shading components.
-    //            // (Here we assume that the diffuse term is modulated by kd as well.)
-    //            colour finalColor = (c * kd) * (L.L * dotProd + ambientTerm);
-
-    //            // Write the final pixel if visible.
-    //            unsigned char r, g, b;
-    //            finalColor.toRGB(r, g, b);
-    //            renderer.canvas.draw(x, y, r, g, b);
-    //            renderer.zbuffer(x, y) = depth;
-    //        }
-    //    }
-    //}
-
-void draw(Renderer& renderer, const Light& L, float ka, float kd) {
-    // Get the minimum and maximum window coordinates for the drawing area
-    vec2D minV, maxV;
-    getBoundsWindow(renderer.canvas, minV, maxV);
-
-    if (area < 1.f) return;
+        int minX = static_cast<int>(minV.x);
+        int maxX = static_cast<int>(ceil(maxV.x));
+        int minY = static_cast<int>(minV.y);
+        int maxY = static_cast<int>(ceil(maxV.y));
 
 
-    // Normalize the light direction
-    vec4 normalizedLight = L.omega_i;
-    normalizedLight.normalise();
+        // Prepare SSE/AVX variables for lighting
+        // Normalize the light direction
+        vec4 normalizedLight = L.omega_i;
+        normalizedLight.normalise();
 
-    // Convert light direction and colors to SIMD vectors
-    __m128 lightDir = _mm_set_ps(0.0f, normalizedLight.z, normalizedLight.y, normalizedLight.x);
-    __m128 lightColor = _mm_set_ps(0.0f, L.L.b, L.L.g, L.L.r);
-    __m128 ambientColor = _mm_set_ps(0.0f, L.ambient.b, L.ambient.g, L.ambient.r);
-    __m128 kdSimd = _mm_set1_ps(kd);
+        // Convert light direction and colors to SIMD vectors
+        __m128 lightDir = _mm_set_ps(0.0f, normalizedLight.z, normalizedLight.y, normalizedLight.x);
+        __m128 lightColor = _mm_set_ps(0.0f, L.L.b, L.L.g, L.L.r);
+        __m128 ambientColor = _mm_set_ps(0.0f, L.ambient.b, L.ambient.g, L.ambient.r);
+        __m128 kdSimd = _mm_set1_ps(kd);
 
-    // Cache vertex coordinates
-    const vec2D& v0 = v[0].p;
-    const vec2D& v1 = v[1].p;
-    const vec2D& v2 = v[2].p;
 
-    int minX = static_cast<int>(minV.x);
-    int maxX = static_cast<int>(ceil(maxV.x));
-    int minY = static_cast<int>(minV.y);
-    int maxY = static_cast<int>(ceil(maxV.y));
+        // Cache vertex information
+        const vec2D& v0 = v[0].p;
+        const vec2D& v1 = v[1].p;
+        const vec2D& v2 = v[2].p;
 
-    // Precompute
-    float temp = 1.0f / area;
+        // Precompute reciprocal of the triangle area
+        float invArea = 1.0f / area;
 
-    // Loop over all pixels in the bounding box
-    for (int y = minY; y < maxY; y++) {
-        for (int x = minX; x < maxX; x++) {
-            float alpha, beta, gamma;
-            vec2D p;
-            p.x = (float)x;
-            p.y = (float)y;
 
-            // Compute barycentric coordinates using multiplication instead of division
-            alpha = getC(v0, v1, p) * temp;
-            beta = getC(v1, v2, p) * temp;
-            gamma = getC(v2, v0, p) * temp;
+        // Fill the pixels within the bounding box
+        for (int y = minY; y < maxY; y++)
+        {
+            for (int x = minX; x < maxX; x++)
+            {
 
-            // Only start if it is in triangle
-            if (alpha >= 0.f && beta >= 0.f && gamma >= 0.f) {
-                // Precompute data
-                float w1 = beta;
-                float w2 = gamma;
-                float w3 = alpha;
+                // Compute barycentric coordinates
+  
+                vec2D p{ static_cast<float>(x), static_cast<float>(y) };
+                float alpha = getC(v0, v1, p) * invArea;
+                float beta = getC(v1, v2, p) * invArea;
+                float gamma = getC(v2, v0, p) * invArea;
 
-                // Colour SIMD
-                __m128 w = _mm_set_ps(0.0f, w3, w2, w1);
-                __m128 c1 = _mm_set_ps(0.0f, v[0].rgb.r, v[0].rgb.g, v[0].rgb.b);
-                __m128 c2 = _mm_set_ps(0.0f, v[1].rgb.r, v[1].rgb.g, v[1].rgb.b);
-                __m128 c3 = _mm_set_ps(0.0f, v[2].rgb.r, v[2].rgb.g, v[2].rgb.b);
+                // Check if the point is inside the triangle
+                if (alpha >= 0.f && beta >= 0.f && gamma >= 0.f)
+                {
 
-                __m128 result = _mm_add_ps(_mm_mul_ps(c1, _mm_shuffle_ps(w, w, _MM_SHUFFLE(0, 0, 0, 0))),
-                    _mm_add_ps(_mm_mul_ps(c2, _mm_shuffle_ps(w, w, _MM_SHUFFLE(1, 1, 1, 1))),
-                        _mm_mul_ps(c3, _mm_shuffle_ps(w, w, _MM_SHUFFLE(2, 2, 2, 2)))));
+                    // Interpolate color using SSE 
+                    // Weights
+                    __m128 w = _mm_set_ps(0.0f, alpha, beta, gamma);
 
-                // initcolour object
-                colour c;
-                c.r = _mm_cvtss_f32(_mm_shuffle_ps(result, result, _MM_SHUFFLE(0, 0, 0, 0)));
-                c.g = _mm_cvtss_f32(_mm_shuffle_ps(result, result, _MM_SHUFFLE(1, 1, 1, 1)));
-                c.b = _mm_cvtss_f32(_mm_shuffle_ps(result, result, _MM_SHUFFLE(2, 2, 2, 2)));
+                    // Triangle vertex colors
+                    __m128 c1 = _mm_set_ps(0.0f, v[0].rgb.r, v[0].rgb.g, v[0].rgb.b);
+                    __m128 c2 = _mm_set_ps(0.0f, v[1].rgb.r, v[1].rgb.g, v[1].rgb.b);
+                    __m128 c3 = _mm_set_ps(0.0f, v[2].rgb.r, v[2].rgb.g, v[2].rgb.b);
 
-                c.clampColour();
+                    // Combine colors: result = c1*alpha + c2*beta + c3*gamma
+                    __m128 part1 = _mm_mul_ps(c1, _mm_shuffle_ps(w, w, _MM_SHUFFLE(0, 0, 0, 0)));
+                    __m128 part2 = _mm_mul_ps(c2, _mm_shuffle_ps(w, w, _MM_SHUFFLE(1, 1, 1, 1)));
+                    __m128 part3 = _mm_mul_ps(c3, _mm_shuffle_ps(w, w, _MM_SHUFFLE(2, 2, 2, 2)));
+                    __m128 result = _mm_add_ps(part1, _mm_add_ps(part2, part3));
 
-                // Interpolate depth
-                float depth = interpolate(beta, gamma, alpha, v[0].p[2], v[1].p[2], v[2].p[2]);
+                    // Convert SSE result to colour struct
+                    colour c;
+                    c.r = _mm_cvtss_f32(_mm_shuffle_ps(result, result, _MM_SHUFFLE(0, 0, 0, 0)));
+                    c.g = _mm_cvtss_f32(_mm_shuffle_ps(result, result, _MM_SHUFFLE(1, 1, 1, 1)));
+                    c.b = _mm_cvtss_f32(_mm_shuffle_ps(result, result, _MM_SHUFFLE(2, 2, 2, 2)));
 
-                // Interpolate normal
-                vec4 normal = interpolate(beta, gamma, alpha, v[0].normal, v[1].normal, v[2].normal);
-                normal.normalise();
+                    c.clampColour();
 
-                // Perform depth testing and update color and depth buffer
-                if (depth > 0.01f && renderer.zbuffer(x, y) > depth) {
-                    __m128 normalSimd = _mm_set_ps(0.0f, normal.z, normal.y, normal.x);
-                    __m128 dotSimd = _mm_dp_ps(lightDir, normalSimd, 0x71);
-                    float dot = _mm_cvtss_f32(dotSimd);
 
-                    dot = max(dot, 0.0f);
-                    
-                    // Calculate the shaded color using SIMD operations
-                    __m128 cSimd = _mm_set_ps(0.0f, c.b, c.g, c.r);
-                    __m128 shadedColor = _mm_mul_ps(kdSimd, _mm_add_ps(_mm_mul_ps(lightColor, _mm_set1_ps(dot)), ambientColor));
-                    shadedColor = _mm_mul_ps(shadedColor, cSimd);
+                    //Interpolate depth and normal
 
-                    // Convert the shaded color to unsigned characters and draw to the canvas
-                    unsigned char r = (unsigned char)(_mm_cvtss_f32(_mm_shuffle_ps(shadedColor, shadedColor, _MM_SHUFFLE(0, 0, 0, 0))) * 255);
-                    unsigned char g = (unsigned char)(_mm_cvtss_f32(_mm_shuffle_ps(shadedColor, shadedColor, _MM_SHUFFLE(1, 1, 1, 1))) * 255);
-                    unsigned char b = (unsigned char)(_mm_cvtss_f32(_mm_shuffle_ps(shadedColor, shadedColor, _MM_SHUFFLE(2, 2, 2, 2))) * 255);
+                    float depth = interpolate(beta, gamma, alpha, v[0].p[2], v[1].p[2], v[2].p[2]);
+                    vec4 normal = interpolate(beta, gamma, alpha, v[0].normal, v[1].normal, v[2].normal);
+                    normal.normalise();
 
-                    renderer.canvas.draw(x, y, r, g, b);
-                    renderer.zbuffer(x, y) = depth;
+                    // Depth testing and final shading
+                    if (depth > 0.01f && renderer.zbuffer(x, y) > depth)
+                    {
+                        // Convert normal to SIMD
+                        __m128 normalSimd = _mm_set_ps(0.0f, normal.z, normal.y, normal.x);
+
+                        // Dot product between lightDir and the interpolated normal
+                        __m128 dotSimd = _mm_dp_ps(lightDir, normalSimd, 0x71);
+                        float dot = _mm_cvtss_f32(dotSimd);
+
+                        dot = max(dot, 0.0f);
+
+                        // Calculate shaded color: (lightColor*dot + ambientColor) * kd * base_color
+                        __m128 cSimd = _mm_set_ps(0.0f, c.b, c.g, c.r);
+                        __m128 litColor = _mm_add_ps(_mm_mul_ps(lightColor, _mm_set1_ps(dot)), ambientColor);
+                        __m128 shadedColor = _mm_mul_ps(_mm_mul_ps(kdSimd, litColor), cSimd);
+
+                        // Convert SIMD color to unsigned char
+                        unsigned char r = static_cast<unsigned char>(_mm_cvtss_f32(
+                            _mm_shuffle_ps(shadedColor, shadedColor, _MM_SHUFFLE(0, 0, 0, 0))) * 255);
+                        unsigned char g = static_cast<unsigned char>(_mm_cvtss_f32(
+                            _mm_shuffle_ps(shadedColor, shadedColor, _MM_SHUFFLE(1, 1, 1, 1))) * 255);
+                        unsigned char b = static_cast<unsigned char>(_mm_cvtss_f32(
+                            _mm_shuffle_ps(shadedColor, shadedColor, _MM_SHUFFLE(2, 2, 2, 2))) * 255);
+
+                        renderer.canvas.draw(x, y, r, g, b);
+                        renderer.zbuffer(x, y) = depth;
+                    }
                 }
             }
         }
     }
-}
 
     void getBounds(vec2D& minV, vec2D& maxV) {
         // Load the first two components (x and y) of each vertex into SSE registers.
