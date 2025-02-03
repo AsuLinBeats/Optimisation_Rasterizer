@@ -211,7 +211,7 @@ void scene1() {
     std::chrono::time_point<std::chrono::high_resolution_clock> end;
     int cycle = 0;
 
-    int numThreads = 10;
+    int numThreads = 20;
     // Main rendering loop
     while (running) {
         renderer.canvas.checkInput();
@@ -235,7 +235,10 @@ void scene1() {
             }
         }
 
-        multithreadedRender(renderer, scene, camera, L, numThreads);
+       multithreadedRender(renderer, scene, camera, L, numThreads);
+        //for (Mesh* m : scene) {
+        //    render(renderer, m, camera, L);
+        //}
         renderer.present();
     }
 
@@ -280,7 +283,7 @@ void scene2() {
     auto start = std::chrono::high_resolution_clock::now();
     std::chrono::time_point<std::chrono::high_resolution_clock> end;
     int cycle = 0;
-    int numThreads = 4;
+    int numThreads = 20;
     bool running = true;
     while (running) {
         renderer.canvas.checkInput();
@@ -304,7 +307,10 @@ void scene2() {
 
         if (renderer.canvas.keyPressed(VK_ESCAPE)) break;
 
-        multithreadedRender(renderer, scene, camera, L, numThreads);
+        //multithreadedRender(renderer, scene, camera, L, numThreads);
+		for (Mesh* m : scene) {
+			render(renderer, m, camera, L);
+		}
         renderer.present();
     }
 
@@ -343,7 +349,7 @@ void scene3() {
     bool running = true;
     auto start = std::chrono::high_resolution_clock::now();
     int cycle = 0;
-
+    int numThreads = 20;
     while (running) {
         renderer.canvas.checkInput();
         renderer.clear();
@@ -364,8 +370,10 @@ void scene3() {
             }
         }
 
-        for (auto& m : scene)
+        //multithreadedRender(renderer, scene, camera, L, numThreads);
+        for (Mesh* m : scene) {
             render(renderer, m, camera, L);
+        }
         renderer.present();
     }
 
