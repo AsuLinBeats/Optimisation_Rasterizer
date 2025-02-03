@@ -1,19 +1,19 @@
 ﻿  raster.cpp
-C:\Users\Davi\source\Optimisation_Rasterizer\Rasterizer\Rasterizer\Rasterizer\mesh.h(203,25): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+C:\Users\Davi\source\Optimisation_Rasterizer\Rasterizer\Rasterizer\Rasterizer\mesh_optimised.h(212,25): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
   (compiling source file 'Rasterizer/raster.cpp')
   
-C:\Users\Davi\source\Optimisation_Rasterizer\Rasterizer\Rasterizer\Rasterizer\mesh.h(208,27): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+C:\Users\Davi\source\Optimisation_Rasterizer\Rasterizer\Rasterizer\Rasterizer\mesh_optimised.h(217,27): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
   (compiling source file 'Rasterizer/raster.cpp')
   
-C:\Users\Davi\source\Optimisation_Rasterizer\Rasterizer\Rasterizer\Rasterizer\renderer.h(13,30): warning C4305: 'initializing': truncation from 'double' to 'float'
+C:\Users\Davi\source\Optimisation_Rasterizer\Rasterizer\Rasterizer\Rasterizer\renderer_optimised.h(13,30): warning C4305: 'initializing': truncation from 'double' to 'float'
   (compiling source file 'Rasterizer/raster.cpp')
   
-C:\Users\Davi\source\Optimisation_Rasterizer\Rasterizer\Rasterizer\Rasterizer\raster.cpp(124,69): warning C4305: 'argument': truncation from 'double' to 'float'
-C:\Users\Davi\source\Optimisation_Rasterizer\Rasterizer\Rasterizer\Rasterizer\raster.cpp(125,69): warning C4305: 'argument': truncation from 'double' to 'float'
-C:\Users\Davi\source\Optimisation_Rasterizer\Rasterizer\Rasterizer\Rasterizer\raster.cpp(126,69): warning C4305: 'argument': truncation from 'double' to 'float'
+C:\Users\Davi\source\Optimisation_Rasterizer\Rasterizer\Rasterizer\Rasterizer\raster.cpp(279,69): warning C4305: 'argument': truncation from 'double' to 'float'
+C:\Users\Davi\source\Optimisation_Rasterizer\Rasterizer\Rasterizer\Rasterizer\raster.cpp(280,69): warning C4305: 'argument': truncation from 'double' to 'float'
+C:\Users\Davi\source\Optimisation_Rasterizer\Rasterizer\Rasterizer\Rasterizer\raster.cpp(281,69): warning C4305: 'argument': truncation from 'double' to 'float'
   Generating code
-  0 of 581 functions ( 0.0%) were compiled, the rest were copied from previous compilation.
+  12 of 726 functions ( 1.7%) were compiled, the rest were copied from previous compilation.
     0 functions were new in current compilation
-    0 functions had inline decision re-evaluated but remain unchanged
+    35 functions had inline decision re-evaluated but remain unchanged
   Finished generating code
   Rasterizer.vcxproj -> C:\Users\Davi\source\Optimisation_Rasterizer\Rasterizer\x64\Release\Rasterizer.exe

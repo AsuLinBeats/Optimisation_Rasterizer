@@ -7,7 +7,7 @@
 #include <immintrin.h>
 #include <cmath>
 // Matrix class for 4x4 transformation matrices
-class alignas(32) matrix {
+class alignas(16) matrix {
     union {
         float m[4][4]; // 2D array representation of the matrix
         float a[16];   // 1D array representation of the matrix for linear access
@@ -34,8 +34,6 @@ public:
 
     vec4 operator * (const vec4& v) const {
         vec4 result;
-        // __m256 row0 = _mm256_load_ps();
-        
         __m128 vec = _mm_load_ps(v.v);
 
         for (unsigned int i = 0; i < 4; i++) {
@@ -54,7 +52,6 @@ public:
         for (unsigned int i = 0; i < 4; i++) {
             __m128 row = _mm_load_ps(&this->m[i][0]); 
             for (unsigned int j = 0; j < 4; j++) {
-                
                 __m128 col = _mm_set_ps(mx.m[3][j], mx.m[2][j], mx.m[1][j], mx.m[0][j]); 
                 __m128 product = _mm_dp_ps(row, col, 0xFF); // Dot product
                 _mm_store_ss(&ret.m[i][j], product);
@@ -65,33 +62,7 @@ public:
 
 
     static matrix makePerspective(float fov, float aspect, float n, float f) {
-        // matrix m;
-       ////  m.zero();
-       // _mm256_store_ps(&m.a[0], _mm256_setzero_ps());
-       // _mm256_store_ps(&m.a[8], _mm256_setzero_ps());
-
-       // //! currently have no idea..
-       // //float tanHalfFov = std::tan(fov / 2.0f);
-       // //float range = f - n;
-
-       // //// SSE
-       // //__m128 param = _mm_set_ps(1.f, 1.f, -f, -f * n);
-       // //__m128 params = _mm_set_ps(
-       // //    (aspect * tanHalfFov), // a[0]
-       // //    tanHalfFov,            // a[5]
-       // //        range,// a[10] )
-       // //           range            // a[11]
-       // //);
-
-       // float tanHalfFov = std::tan(fov / 2.0f);
-
-       // m.a[0] = 1.0f / (aspect * tanHalfFov);
-       // m.a[5] = 1.0f / tanHalfFov;
-       // m.a[10] = -f / (f - n);
-       // m.a[11] = -(f * n) / (f - n);
-       // m.a[14] = -1.0f;
-
-       // return m;
+        
         matrix m;
         m.zero();
 
@@ -109,12 +80,13 @@ public:
 
 
     static matrix makeTranslation(float tx, float ty, float tz) {
-        matrix m;
-        m.identity();
-        m.m[0][3] = tx;
-        m.m[1][3] = ty;
-        m.m[2][3] = tz;
-        return m;
+        matrix result;
+
+        _mm_store_ps(result.a + 0, _mm_setr_ps(1.0f, 0.0f, 0.0f, tx));
+        _mm_store_ps(result.a + 4, _mm_setr_ps(0.0f, 1.0f, 0.0f, ty));
+        _mm_store_ps(result.a + 8, _mm_setr_ps(0.0f, 0.0f, 1.0f, tz));
+        _mm_store_ps(result.a + 12, _mm_setr_ps(0.0f, 0.0f, 0.0f, 1.0f));
+        return result;
     }
 
 
@@ -168,9 +140,7 @@ public:
 
     }
 
-    //static matrix makeRotateXYZ(float x, float y, float z) {
-    //    return matrix::makeRotateX(x) * matrix::makeRotateY(y) * matrix::makeRotateZ(z);
-    //}
+
     static matrix makeRotateXYZ(float x, float y, float z) {
         // the original one will invoke 3 functions and there are many overlaps.
        //! Change to this for now

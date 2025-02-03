@@ -6,7 +6,7 @@
 #include "zbuffer_optimised.h"
 // #include "matrix.h"
 #include "matrix_optimised.h"
-
+#include<mutex>
 // The `Renderer` class handles rendering operations, including managing the
 // Z-buffer, canvas, and perspective transformations for a 3D scene.
 class Renderer {
@@ -18,13 +18,15 @@ public:
     Zbuffer<float> zbuffer;                  // Z-buffer for depth management
     GamesEngineeringBase::Window canvas;     // Canvas for rendering the scene
     matrix perspective;                      // Perspective projection matrix
-
+    std::mutex zbufferMutex;
+    std::mutex canvasMutex;
     // Constructor initializes the canvas, Z-buffer, and perspective projection matrix.
     Renderer() {
         //! can apply multithread here maybe
         canvas.create(1024, 768, "Raster");  // Create a canvas with specified dimensions and title
         zbuffer.create(1024, 768);           // Initialize the Z-buffer with the same dimensions
         perspective = matrix::makePerspective(fov, aspect, n, f); // Set up the perspective matrix
+
     }
 
     // Clears the canvas and resets the Z-buffer.

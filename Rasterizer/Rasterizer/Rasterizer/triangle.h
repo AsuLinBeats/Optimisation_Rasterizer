@@ -1,8 +1,8 @@
 #pragma once
 
 #include "mesh.h"
-#include "colour.h"
-// #include "colour_optimised.h"
+//#include "colour.h"
+#include "colour_optimised.h"
 #include "renderer.h"
 #include "light.h"
 #include <iostream>

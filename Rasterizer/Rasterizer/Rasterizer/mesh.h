@@ -2,14 +2,13 @@
 
 #include <vector>
 #include <iostream>
-#include <immintrin.h>
-#include "Vec4_Optimised.h"
 //#include "vec4.h"
-// #include "matrix.h"
+#include "Vec4_Optimised.h"
+//#include "matrix.h"
 #include "matrix_optimised.h"
-#include "colour.h"
-// #include "colour_optimised.h"
-#include<cmath>
+//#include "colour.h"
+#include "colour_optimised.h"
+
 // Represents a vertex in a 3D mesh, including its position, normal, and color
 struct Vertex {
     vec4 p;         // Position of the vertex in 3D space
@@ -92,7 +91,6 @@ public:
     // - x2, y2: Coordinates of the opposite corner
     // Returns a Mesh object representing the rectangle
     static Mesh makeRectangle(float x1, float y1, float x2, float y2) {
-       //! multithread here
         Mesh mesh;
         mesh.vertices.clear();
         mesh.triangles.clear();
@@ -152,7 +150,6 @@ public:
             vec4(0, 1, 0, 0)
         };
 
-
         // Add vertices and triangles for each face
         int faceIndices[6][4] = {
             {1, 0, 3, 2},
@@ -181,7 +178,7 @@ public:
             mesh.addTriangle(baseIndex, baseIndex + 3, baseIndex + 2);
         }
         return mesh;
-    } 
+    }
 
     // Generate a sphere mesh
     // Input Variables:

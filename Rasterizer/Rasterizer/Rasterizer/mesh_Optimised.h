@@ -1,4 +1,3 @@
-
 #pragma once
 
 #include <vector>
@@ -6,27 +5,32 @@
 #include <immintrin.h>
 #include "Vec4_Optimised.h"
 //#include "vec4.h"
-#include "matrix.h"
-//#include "matrix_optimised.h"
-#include "colour.h"
-// #include "colour_optimised.h"
+// #include "matrix.h"
+#include "matrix_optimised.h"
+//#include "colour.h"
+#include "colour_optimised.h"
 #include<cmath>
-
-#ifndef M_PI
-#define M_PI 3.14159265358979323846
-#endif
+#include<thread>
+#include<mutex>
+#include<array>
 
 // Represents a vertex in a 3D mesh, including its position, normal, and color
 struct Vertex {
     vec4 p;         // Position of the vertex in 3D space
     vec4 normal;    // Normal vector for the vertex
     colour rgb;     // Color of the vertex
+
+    Vertex() : p(), normal(), rgb() {}  // Default constructor
+    Vertex(const vec4& pos, const vec4& norm, const colour& col)
+        : p(pos), normal(norm), rgb(col) {
+    }
+
 };
 
 // Stores indices of vertices that form a triangle in a mesh
 struct triIndices {
     unsigned int v[3]; // Indices into the vertex array
-
+    triIndices() : v{ 0, 0, 0 } {} // add default constructor
     // Constructor to initialize the indices of a triangle
     triIndices(unsigned int v1, unsigned int v2, unsigned int v3) {
         v[0] = v1;
@@ -45,11 +49,6 @@ public:
     std::vector<Vertex> vertices;       // List of vertices in the mesh
     std::vector<triIndices> triangles;  // List of triangles in the mesh
 
-    // Set the uniform color and reflection coefficients for the mesh
-    // Input Variables:
-    // - _c: Uniform color
-    // - _ka: Ambient reflection coefficient
-    // - _kd: Diffuse reflection coefficient
     void setColour(colour _c, float _ka, float _kd) {
         col = _c;
         ka = _ka;
@@ -62,18 +61,11 @@ public:
         ka = kd = 0.75f;
     }
 
-    // Add a vertex and its normal to the mesh
-    // Input Variables:
-    // - vertex: Position of the vertex
-    // - normal: Normal vector for the vertex
     void addVertex(const vec4& vertex, const vec4& normal) {
         Vertex v = { vertex, normal, col };
         vertices.push_back(v);
     }
 
-    // Add a triangle to the mesh
-    // Input Variables:
-    // - v1, v2, v3: Indices of the vertices forming the triangle
     void addTriangle(int v1, int v2, int v3) {
         triangles.emplace_back(v1, v2, v3);
     }
@@ -92,134 +84,120 @@ public:
         }
     }
 
-    // Create a rectangle mesh given two opposite corners
-    // Input Variables:
-    // - x1, y1: Coordinates of one corner
-    // - x2, y2: Coordinates of the opposite corner
-    // Returns a Mesh object representing the rectangle
+
     static Mesh makeRectangle(float x1, float y1, float x2, float y2) {
         //! multithread here
         Mesh mesh;
-        mesh.vertices.clear();
-        mesh.triangles.clear();
+        mesh.vertices.resize(4);
+        mesh.triangles.resize(2);
+        // init
+        __m128 xValues = _mm_setr_ps(x1, x2, x2, x1);
+        __m128 yValues = _mm_setr_ps(y1, y1, y2, y2);
+        __m128 zValues = _mm_setzero_ps();
+        alignas(16) float xa[4], ya[4];
+        _mm_store_ps(xa, xValues);
+        _mm_store_ps(ya, yValues);
 
-        // Define the four corners of the rectangle
-        vec4 v1(x1, y1, 0);
-        vec4 v2(x2, y1, 0);
-        vec4 v3(x2, y2, 0);
-        vec4 v4(x1, y2, 0);
+        // normal calculation
+        const vec4 v1 = vec4(xa[0], ya[0], 0.0f, 1.0f);
+        const vec4 v2 = vec4(xa[1], ya[1], 0.0f, 1.0f);
+        const vec4 v4 = vec4(xa[3], ya[3], 0.0f, 1.0f);
+        // subtraction, normal, cross has been optimised in vec4.h, so just keep them.
+        const vec4 edge1 = v2 - v1;
+        const vec4 edge2 = v4 - v1;
 
-        // Calculate the normal vector using the cross product of two edges
-        vec4 edge1 = v2 - v1;
-        vec4 edge2 = v4 - v1;
         vec4 normal = vec4::cross(edge1, edge2);
         normal.normalise();
 
-        // Add vertices with the calculated normal
-        mesh.addVertex(v1, normal);
-        mesh.addVertex(v2, normal);
-        mesh.addVertex(v3, normal);
-        mesh.addVertex(v4, normal);
+        //set vertices
+       //  const __m128 z_combined = _mm_unpacklo_ps(zValues); // [0,1,0,1]
+        for (int i = 0; i < 4; ++i) {
+            const __m128 pos = _mm_setr_ps(xa[i], ya[i], 0.0f, 1.0f);
+            mesh.vertices[i].p = vec4(pos);
+            mesh.vertices[i].normal = normal;
+        }
 
-        // Add two triangles forming the rectangle
+        // add triangle
         mesh.addTriangle(0, 2, 1);
         mesh.addTriangle(0, 3, 2);
 
         return mesh;
     }
 
-    // Generate a cube mesh
-    // Input Variables:
-    // - size: Length of one side of the cube
-    // Returns a Mesh object representing the cube
+
     static Mesh makeCube(float size) {
         Mesh mesh;
+        constexpr int numFaces = 6;
+        constexpr int vertsFace = 4;
+        constexpr int trisFace = 2;
+
+        mesh.vertices.resize(numFaces * vertsFace);
+        mesh.triangles.resize(numFaces * trisFace);
+
         float halfSize = size / 2.0f;
 
-        // Define cube vertices (8 corners) ()
-        alignas(32) float pos[8][4] = {
-            {-1,-1,-1,1},
-            {1,-1,-1,1},
-            {1,1,-1,1},
-            {-1,1,-1,1},
-            {-1,-1,1,1},
-            {1,-1,1,1},
-            {1,1,1,1},
-            {-1,1,1,1}
+        vec4 positions[8] = {
+            vec4(-halfSize, -halfSize, -halfSize, 1.0f),
+            vec4(halfSize, -halfSize, -halfSize, 1.0f),
+            vec4(halfSize, halfSize, -halfSize, 1.0f),
+            vec4(-halfSize, halfSize, -halfSize, 1.0f),
+            vec4(-halfSize, -halfSize, halfSize, 1.0f),
+            vec4(halfSize, -halfSize, halfSize, 1.0f),
+            vec4(halfSize, halfSize, halfSize, 1.0f),
+            vec4(-halfSize, halfSize, halfSize, 1.0f)
         };
-        // Define face normals
+
         vec4 normals[6] = {
-            vec4(0, 0, -1, 0),
-            vec4(0, 0, 1, 0),
-            vec4(-1, 0, 0, 0),
-            vec4(1, 0, 0, 0),
-            vec4(0, -1, 0, 0),
-            vec4(0, 1, 0, 0)
+            vec4(0, 0, -1, 0),  // front
+            vec4(0, 0, 1, 0),   // back
+            vec4(-1, 0, 0, 0),  // left
+            vec4(1, 0, 0, 0),   // right
+            vec4(0, -1, 0, 0),  // bottom
+            vec4(0, 1, 0, 0)    // top
         };
 
-        vec4 positions[8];
-        for (int i = 0; i < 8; i += 4) {
-            // load 4 float for each line every time running
-            __m128 sign_x = _mm_load_ps(&pos[i][0]);
-            __m128 sign_y = _mm_load_ps(&pos[i][1]);
-            __m128 sign_z = _mm_load_ps(&pos[i][2]);
-            __m128 sign_w = _mm_load_ps(&pos[i][3]);
+        constexpr int faceIndices[6][4] = {
+            {1, 0, 3, 2},  // front
+            {4, 5, 6, 7},  // back
+            {3, 0, 4, 7},  // left
+            {5, 1, 2, 6},  // right
+            {0, 1, 5, 4},  // bottom
+            {2, 3, 7, 6}   // top
+        };
 
-            // calculate position: coord = sign * halfSize
-            __m128 scaled_x = _mm_mul_ps(sign_x, _mm_set1_ps(halfSize));
-            __m128 scaled_y = _mm_mul_ps(sign_y, _mm_set1_ps(halfSize));
-            __m128 scaled_z = _mm_mul_ps(sign_z, _mm_set1_ps(halfSize));
-            __m128 scaled_w = _mm_mul_ps(sign_w, _mm_set1_ps(halfSize));
+        std::vector<std::thread> threads;
+        for (int i = 0; i < numFaces; ++i) {
+            threads.emplace_back([i, &mesh, &positions, &normals, &faceIndices]() {
+                std::array<Vertex, 4> localVertices;
+               
+                std::array<triIndices, 2> localTriangles = {
+                    triIndices(0, 0, 0),  
+                    triIndices(0, 0, 0)
+                };
+                for (int j = 0; j < 4; ++j) {
+                    localVertices[j] = Vertex{ positions[faceIndices[i][j]], normals[i], mesh.col };
+                }
 
-            // save to position array
-            _mm_store_ps(&positions[i].x, scaled_x);
-            _mm_store_ps(&positions[i].y, scaled_y);
-            _mm_store_ps(&positions[i].z, scaled_z);
-            _mm_store_ps(&positions[i].w, scaled_w);
+                const int vertBase = i * vertsFace;
+                const int triBase = i * trisFace;
+
+                localTriangles = {
+                    triIndices(vertBase, vertBase + 2, vertBase + 1),
+                    triIndices(vertBase, vertBase + 3, vertBase + 2)
+                };
+
+                for (int j = 0; j < 4; ++j) {
+                    mesh.vertices[vertBase + j] = localVertices[j];
+                }
+                mesh.triangles[triBase] = localTriangles[0];
+                mesh.triangles[triBase + 1] = localTriangles[1];
+                });
         }
 
-        mesh.vertices.reserve(24); // 6 faces * 4 vertices
-        mesh.triangles.reserve(12); // 6 faces * 2 triangles
-
-
-      //! zai kan kan
-
-        //// Add vertices and triangles for each face
-        //int faceIndices[6][4] = {
-        //    {1, 0, 3, 2},
-        //    {4, 5, 6, 7},
-        //    {3, 0, 4, 7},
-        //    {5, 1, 2, 6},
-        //    {0, 1, 5, 4},
-        //    {2, 3, 7, 6}
-        //};
-
-        //for (int i = 0; i < 6; ++i) {
-        //    int v0 = faceIndices[i][0];
-        //    int v1 = faceIndices[i][1];
-        //    int v2 = faceIndices[i][2];
-        //    int v3 = faceIndices[i][3];
-
-        //    // Add vertices with their normals
-        //    mesh.addVertex(positions[v0], normals[i]);
-        //    mesh.addVertex(positions[v1], normals[i]);
-        //    mesh.addVertex(positions[v2], normals[i]);
-        //    mesh.addVertex(positions[v3], normals[i]);
-
-        //    // Add two triangles for the face
-        //    int baseIndex = i * 4;
-        //    mesh.addTriangle(baseIndex, baseIndex + 2, baseIndex + 1);
-        //    mesh.addTriangle(baseIndex, baseIndex + 3, baseIndex + 2);
-        //}
-        //return mesh;
+        for (auto& t : threads) t.join();
+        return mesh;
     }
 
-    // Generate a sphere mesh
-    // Input Variables:
-    // - radius: Radius of the sphere
-    // - latitudeDivisions: Number of divisions along the latitude
-    // - longitudeDivisions: Number of divisions along the longitude
-    // Returns a Mesh object representing the sphere
     static Mesh makeSphere(float radius, int latitudeDivisions, int longitudeDivisions) {
         Mesh mesh;
         if (latitudeDivisions < 2 || longitudeDivisions < 3) {
@@ -269,4 +247,214 @@ public:
         }
         return mesh;
     }
+
+
+ //! work, but slower
+
+//static Mesh makeSphere(float radius, int latitudeDivisions, int longitudeDivisions) {
+//    Mesh mesh;
+//    if (latitudeDivisions < 2 || longitudeDivisions < 3) {
+//        throw std::invalid_argument("Latitude divisions must be >= 2 and longitude divisions >= 3");
+//    }
+//
+//    // Pre-calculate total number of vertices and triangles.
+//    int totalLat = latitudeDivisions + 1;                     // rows of vertices
+//    int verticesPerLat = longitudeDivisions + 1;                // vertices per row
+//    int totalVertices = totalLat * verticesPerLat;
+//    int totalTriangles = 2 * latitudeDivisions * longitudeDivisions;
+//
+//    // Pre-allocate the arrays.
+//    mesh.vertices.resize(totalVertices);
+//    mesh.triangles.resize(totalTriangles);
+//
+//    // Determine how many threads to use.
+//    int numThreads = std::thread::hardware_concurrency();
+//    if (numThreads <= 0)
+//        numThreads = 2;
+//    // We partition by vertex rows.
+//    // We never want more threads than there are rows.
+//    int effectiveThreads = min(numThreads, totalLat);
+//
+//    std::vector<std::thread> threads;
+//    threads.reserve(effectiveThreads);
+//
+//    // Partition the latitude rows among threads.
+//    // Use an even partition with remainder.
+//    int base = totalLat / effectiveThreads;
+//    int rem = totalLat % effectiveThreads;
+//    int currentLat = 0;
+//
+//    for (int t = 0; t < effectiveThreads; t++) {
+//        int latCount = base + (t < rem ? 1 : 0);
+//        int latStart = currentLat;
+//        int latEnd = latStart + latCount;  // latEnd is exclusive
+//        currentLat = latEnd;
+//
+//        // Launch a thread that processes vertex rows [latStart, latEnd)
+//        threads.emplace_back([=, &mesh]() {
+//            // For each latitude row in this thread, compute the vertices.
+//            // Note: For the spherical parameterization, theta ranges from 0 to PI,
+//            // and we use latitude index 'lat' in [0, latitudeDivisions].
+//            for (int lat = latStart; lat < latEnd; lat++) {
+//                float theta = M_PI * lat / latitudeDivisions;
+//                float sinTheta = std::sin(theta);
+//                float cosTheta = std::cos(theta);
+//                for (int lon = 0; lon < longitudeDivisions + 1; lon++) {
+//                    float phi = 2 * M_PI * lon / longitudeDivisions;
+//                    float sinPhi = std::sin(phi);
+//                    float cosPhi = std::cos(phi);
+//
+//                    vec4 position(
+//                        radius * sinTheta * cosPhi,
+//                        radius * sinTheta * sinPhi,
+//                        radius * cosTheta,
+//                        1.0f
+//                    );
+//
+//                    vec4 normal = position;
+//                    normal.normalise();
+//                    normal[3] = 0.f;
+//
+//                    // Compute the global vertex index.
+//                    int index = lat * verticesPerLat + lon;
+//                    mesh.vertices[index] = Vertex(position, normal, mesh.col);
+//                }
+//            }
+//
+//            // Next, generate triangles for all rows that this thread covers
+//            // except the very last row because triangles use row 'lat' and 'lat+1'.
+//            // Triangle indices are computed globally:
+//            // For a given (lat, lon), let:
+//            //   v0 = lat * verticesPerLat + lon,
+//            //   v1 = v0 + 1,
+//            //   v2 = (lat+1) * verticesPerLat + lon,
+//            //   v3 = v2 + 1.
+//            // Then create two triangles: (v0, v1, v2) and (v1, v3, v2).
+//            // Note that valid lat for triangles is 0 <= lat < latitudeDivisions.
+//            int localTriangleStart = latStart;  // first row this thread might generate triangles for
+//            // But clamp the upper bound to latitudeDivisions.
+//            int latForTrianglesEnd = min(latEnd, latitudeDivisions);
+//            for (int lat = localTriangleStart; lat < latForTrianglesEnd; lat++) {
+//                for (int lon = 0; lon < longitudeDivisions; lon++) {
+//                    int v0 = lat * verticesPerLat + lon;
+//                    int v1 = v0 + 1;
+//                    int v2 = (lat + 1) * verticesPerLat + lon;
+//                    int v3 = v2 + 1;
+//                    // Compute the global triangle array offset:
+//                    int triIndex = lat * (2 * longitudeDivisions) + (lon * 2);
+//                    mesh.triangles[triIndex] = triIndices(v0, v1, v2);
+//                    mesh.triangles[triIndex + 1] = triIndices(v1, v3, v2);
+//                }
+//            }
+//            });
+//    }
+//
+//    // Join all threads.
+//    for (auto& th : threads) {
+//        th.join();
+//    }
+//    return mesh;
+//}
+
+//! miss sphere.....
+
+//static Mesh makeSphere(float radius, int latitudeDivisions, int longitudeDivisions) {
+//    Mesh mesh;
+//    if (latitudeDivisions < 2 || longitudeDivisions < 3) {
+//        throw std::invalid_argument("Latitude divisions must be >= 2 and longitude divisions >= 3");
+//    }
+//
+//    // We want to generate (latitudeDivisions+1) rows of vertices.
+//    int totalRows = latitudeDivisions + 1;
+//    // We'll generate exactly 'longitudeDivisions' vertices per row (seam is wrapped via modulus)
+//    int totalVertices = totalRows * longitudeDivisions;
+//    // The number of triangles is: for each of the (totalRows-1) bands, 
+//    // for each vertex in a row, we create two triangles.
+//    int totalTriangles = (totalRows - 1) * longitudeDivisions * 2;
+//
+//    // Reserve (optional) but note: we will later merge local data.
+//    mesh.vertices.reserve(totalVertices);
+//    mesh.triangles.reserve(totalTriangles);
+//
+//    // Determine the number of threads and partition rows among threads.
+//    int numThreads = std::thread::hardware_concurrency();
+//    if (numThreads == 0)
+//        numThreads = 4;
+//    int rowsPerThread = totalRows / numThreads;
+//    if (rowsPerThread == 0) {
+//        rowsPerThread = 1;
+//        numThreads = totalRows;
+//    }
+//
+//    std::vector<std::thread> threads;
+//    std::mutex meshMutex;  // To protect merging into the mesh
+//
+//    for (int t = 0; t < numThreads; ++t) {
+//        int startRow = t * rowsPerThread;
+//        int endRow = (t == numThreads - 1) ? totalRows : startRow + rowsPerThread;
+//        threads.emplace_back([=, &mesh, &meshMutex]() {
+//            std::vector<Vertex> localVertices;
+//            std::vector<triIndices> localTriangles;
+//
+//            // Generate vertices for rows [startRow, endRow)
+//            for (int lat = startRow; lat < endRow; ++lat) {
+//                float theta = M_PI * lat / latitudeDivisions; // lat=0 => theta=0, lat=latitudeDivisions => theta=M_PI
+//                float sinTheta = sin(theta);
+//                float cosTheta = cos(theta);
+//                for (int lon = 0; lon < longitudeDivisions; ++lon) {
+//                    float phi = 2 * M_PI * lon / longitudeDivisions;
+//                    vec4 position(
+//                        radius * sinTheta * cos(phi),
+//                        radius * sinTheta * sin(phi),
+//                        radius * cosTheta,
+//                        1.0f
+//                    );
+//                    vec4 normal = position;
+//                    normal.normalise();
+//                    localVertices.push_back({ position, normal, mesh.col });
+//                }
+//            }
+//
+//            // Generate triangles.
+//            // We can form triangles only for rows that have a row below (i.e. lat < totalRows - 1)
+//            // Note: localVertices holds only the vertices for rows [startRow, endRow).
+//            // Thus, only process rows from startRow up to endRow-1.
+//            for (int lat = startRow; lat < endRow - 1; ++lat) {
+//                // The local row index for 'lat' is (lat - startRow).
+//                for (int lon = 0; lon < longitudeDivisions; ++lon) {
+//                    int currentRow = lat - startRow;      // local index for current row
+//                    int nextRow = currentRow + 1;           // local index for next row
+//                    // Wrap-around: the next vertex in the row is at (lon+1) mod longitudeDivisions.
+//                    int v0 = currentRow * longitudeDivisions + lon;
+//                    int v1 = currentRow * longitudeDivisions + ((lon + 1) % longitudeDivisions);
+//                    int v2 = nextRow * longitudeDivisions + lon;
+//                    int v3 = nextRow * longitudeDivisions + ((lon + 1) % longitudeDivisions);
+//
+//                    localTriangles.push_back(triIndices(v0, v1, v2));
+//                    localTriangles.push_back(triIndices(v1, v3, v2));
+//                }
+//            }
+//
+//            // Now merge the local vertices and triangles into the global mesh.
+//            // IMPORTANT: Adjust the triangle indices by the current global vertex offset.
+//            std::lock_guard<std::mutex> lock(meshMutex);
+//            int vertexOffset = mesh.vertices.size();
+//            mesh.vertices.insert(mesh.vertices.end(), localVertices.begin(), localVertices.end());
+//            for (auto& tri : localTriangles) {
+//                tri.v[0] += vertexOffset;
+//                tri.v[1] += vertexOffset;
+//                tri.v[2] += vertexOffset;
+//            }
+//            mesh.triangles.insert(mesh.triangles.end(), localTriangles.begin(), localTriangles.end());
+//            });
+//    }
+//
+//    for (auto& t : threads) {
+//        t.join();
+//    }
+//    return mesh;
+//}
+
+
+
 };

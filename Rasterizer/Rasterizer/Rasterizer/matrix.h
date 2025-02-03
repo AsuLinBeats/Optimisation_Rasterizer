@@ -150,7 +150,7 @@ public:
     // Returns the scaling matrix
     static matrix makeScale(float s) {
         matrix m;
-        s = max(s, 0.01f); // Ensure scaling factor is not too small
+        s = std::max(s, 0.01f); // Ensure scaling factor is not too small
         m.identity();
         m.a[0] = s;
         m.a[5] = s;

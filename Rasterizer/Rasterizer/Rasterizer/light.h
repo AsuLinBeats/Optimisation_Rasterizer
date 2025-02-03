@@ -2,8 +2,8 @@
 
 #include "Vec4_Optimised.h"
 //#include "vec4.h"
-#include "colour.h"
-//#include "colour_optimised.h"
+// #include "colour.h"
+#include "colour_optimised.h"
 
 // keep light straightforward - struct for storing information
 struct Light {
