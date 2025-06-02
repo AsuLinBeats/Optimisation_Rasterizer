@@ -384,7 +384,7 @@ void scene3() {
 int main() {
     // Time test
     auto start = std::chrono::high_resolution_clock::now();
-    scene1();
+    scene2();
     auto end = std::chrono::high_resolution_clock::now();
     std::cout << "Time doing some work : "
         << std::chrono::duration<double, std::milli>(end - start).count()
